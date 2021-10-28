@@ -145,25 +145,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EBO.cpp" />
-    <ClCompile Include="glad.c" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="shaderClass.cpp" />
-    <ClCompile Include="stb.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="VAO.cpp" />
-    <ClCompile Include="VBO.cpp" />
+    <ClCompile Include="Engine\EBO.cpp" />
+    <ClCompile Include="Engine\glad.c" />
+    <ClCompile Include="Engine\Main.cpp" />
+    <ClCompile Include="Engine\shaderClass.cpp" />
+    <ClCompile Include="Engine\stb.cpp" />
+    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\VAO.cpp" />
+    <ClCompile Include="Engine\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vert" />
+    <None Include="Engine\Shaders\default.frag" />
+    <None Include="Engine\Shaders\default.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EBO.h" />
-    <ClInclude Include="shaderClass.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="VAO.h" />
-    <ClInclude Include="VBO.h" />
+    <ClInclude Include="Engine\EBO.h" />
+    <ClInclude Include="Engine\shaderClass.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\VAO.h" />
+    <ClInclude Include="Engine\VBO.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png" />
