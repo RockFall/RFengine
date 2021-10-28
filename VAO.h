@@ -28,7 +28,7 @@ public:
 	//			 i.e.: a layout 1, size 3, offset 3*sizeof(flloat) 
 	//			 and stride of 6*sizeof(flloat) for a {X,Y,Z,R,G,B} 
 	//			 vertice, can select only the RGB part
-	void LinkAttrib(VBO VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride,void* offset);
+	void LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride,void* offset);
 
 	void Bind();
 	void Unbind();

@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
+Texture::Texture(const char* imagePath, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
 {
 	// Sets internal type as given 'texType'
 	type = texType;
@@ -8,7 +8,7 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	// Load image and data with stb
 	int widthImg, heightImg, numColorChannels;
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColorChannels, 0);
+	unsigned char* bytes = stbi_load(imagePath, &widthImg, &heightImg, &numColorChannels, 0);
 
 	// Creates an texture object
 	glGenTextures(1, &ID);
@@ -36,10 +36,13 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	glBindTexture(texType, 0);
 }
 
-void Texture::texUnit(Shader shader, const char* uniform, GLuint unit)
+void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit)
 {
+	// Gets uniform's location
 	GLuint uTex0 = glGetUniformLocation(shader.ID, uniform);
+	// Shader needs to be activated before changing uniform's value
 	shader.Activate();
+	// Set's the value of uniform -> the unit slot that the shader will use
 	glUniform1i(uTex0, unit);
 }
 
