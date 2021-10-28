@@ -1,11 +1,11 @@
 #include "VBO.h"
 
 VBO::VBO(GLfloat* vertices, GLsizeiptr size) {
-	// Gera 1 objeto de VBO
+	// Creates one VBO object
 	glGenBuffers(1, &ID);
-	// Bind do VBO para seu uso
+	// Binds it for it's use
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
-	// Inserção dos dados de vertices no VBO
+	// Inserts vertices data into VBO
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 }
 

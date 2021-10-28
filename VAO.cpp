@@ -1,14 +1,16 @@
 #include "VAO.h"
 
+
 VAO::VAO() {
-	// Gera 1 objeto de VAO
 	glGenVertexArrays(1, &ID);
 }
 
 void VAO::LinkAttrib(VBO VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset) {
-	// Bind no VBO para seu uso
 	VBO.Bind();
+	// Specify the location and data format of the array of generic 
+	// vertex attributes to use when rendering. 
 	glVertexAttribPointer(layout, numComponents, type, GL_FALSE, stride, offset);
+	// Enables the use of currently bound vertex array object
 	glEnableVertexAttribArray(layout);
 	VBO.Unbind();
 }

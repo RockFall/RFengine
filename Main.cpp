@@ -1,11 +1,18 @@
-#include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
+#include<stb/stb_image.h>
 
+#include<iostream>
+
+#include "Texture.h"
 #include "shaderClass.h"
 #include "VBO.h"
 #include "VAO.h"
 #include "EBO.h"
+
+// Base window size
+const unsigned int WIDTH = 800;
+const unsigned int HEIGHT = 600;
 
 int main() {
 
@@ -21,7 +28,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-	// Criando uma janela inicial de 800px por 800px
+	// Creating the main 800x800 Window
 	GLFWwindow* window = glfwCreateWindow(800, 800, "RFengine", NULL, NULL);
 	// Error check
 	if (window == NULL) {
@@ -30,7 +37,7 @@ int main() {
 		return -1;
 	}
 
-	// Avisamos o glfw que o contexto atual está na janela criada
+	// Telling glfw that the current context has to be into 'window'
 	glfwMakeContextCurrent(window);
 
 	// Load GLAD so it configures OpenGL
@@ -42,73 +49,95 @@ int main() {
 				return -1;
 			}*/
 
-	// Especificando o viewport do OpenGL dentro da janela (x1, y1, x2, y2)
+	// Specifying the OpenGL's viewport inside the window (x1, y1, x2, y2)
 	glViewport(0, 0, 800, 800);
 	
 	// Keeps track of window resizing
-			//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	// glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	// Coordenadas dos vértices
+
+	// ----------------------------------------------------------
+
+	// Vertices coordinates
 	GLfloat vertices[] = {
-		//                 COORDINATES               /         COLORS        //
-		-0.5f    ,-0.5f * float(sqrt(3))     / 3, 0.0f,  0.8f, 0.3f , 0.02f, // Inferior Esquerdo
-		 0.5f    ,-0.5f * float(sqrt(3))     / 3, 0.0f,  0.8f, 0.3f , 0.02f, // Inferior Direito
-		 0.0f    , 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,  1.0f, 0.6f , 0.32f, // Superior
-		-0.5f / 2, 0.5f * float(sqrt(3))     / 6, 0.0f,  0.9f, 0.45f, 0.17f, // Centro Esquerda
-		 0.5f / 2, 0.5f * float(sqrt(3))     / 6, 0.0f,  0.9f, 0.45f, 0.17f, // Centro Direita
-		 0.0f    ,-0.5f * float(sqrt(3))     / 3, 0.0f,  0.8f, 0.3f , 0.02f  // Centro Inferior
+		//   COORDINATES   /     COLORS        /  TEXTURE    //
+		-0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f,  // Lower left corner
+		-0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,  // Upper left corner
+		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,  // Upper right corner
+		 0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,  1.0f, 0.0f,  // Lower right corner
 	};
 
-	// Indices que formam cada triangulo
+	// Indices for each triangle
 	GLuint indices[] = {
-		0, 3, 5, // Lower left  triangle
-		3, 2, 4, // Lower right triangle
-		5, 4, 1, // Upper triangle
+		0, 2, 1, // Right triangle
+		0, 3, 2  // Left triangle
 	};
 
-	// Criação do programa de shader
+	// ----------------------------------------------------------
+
 	Shader shaderProgram("default.vert", "default.frag");
-	// Criação da array de VBO's e bind dela internamente
+
+
+	// Creating array of VBO's (VAO) and internally binding it
 	VAO VAO1;
 	VAO1.Bind();
-	// Criação dos buffers de vertices e de indices
+
+	// Vertices (VBO) and indices (EBO) buffers creation
 	VBO VBO1(vertices, sizeof(vertices));
 	EBO EBO1(indices, sizeof(indices));
-	// Inserção do VBO no VAO
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	// Unbind de todos
+
+	// Linking VBO attributes (coordinates, colors, texture data) into VAO
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+
+	// Unbind all
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
 
+	// Stores ID of 'uScale' uniform
+	GLuint uScaleID = glGetUniformLocation(shaderProgram.ID, "uScale");
+
+	//  ----------------------------------------------------------
+
+	Texture drama("drama.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	drama.texUnit(shaderProgram, "uTex0", 0);
+
+	//  ----------------------------------------------------------
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
-		// Especifica a cor do background
+		// Background color
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Limpa o buffer e insere as cores
+		// Clear the buffers and inserts the color
 		glClear(GL_COLOR_BUFFER_BIT);
-		// Faz o OpenGL ativar o programa
+		
+		// Makes OpenGL use our ShaderProgram
 		shaderProgram.Activate();
-		// Bind do VAO para uso pelo OpenGL
+		// Sets uniform value -> CAUTION: has to be done after shaderProgram activation
+		glUniform1f(uScaleID, 0.5f);
+		drama.Bind();
+		// VAO bind for use in OpenGL
 		VAO1.Bind();
-		// Desenho da forma usando a primitiva de triangulos
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		// Drawing while using triangles primitive and 
+		// swaping buffers to show what we had draw
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window);
 
-		// Checa e resolve/chama por qualquer evento GLFW existente
+		// Checks (and calls) for any GLFW existing events
 		glfwPollEvents();
 	}
 
-	// Deleção do VAO, VBO e do Programa de shaders
+	// Deletes all objects we've created
+	drama.Delete();
 	shaderProgram.Delete();
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
 
-	// Encerra a janela e o GLFW
+	// Ends the window and GLFW
 	glfwDestroyWindow(window);
 	glfwTerminate();
 	return 0;
