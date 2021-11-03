@@ -162,6 +162,7 @@ int main() {
 	shaderProgram.Activate();
 	// Sets uniform value -> CAUTION: has to be done after shaderProgram activation
 	glUniform1f(uScaleID, 0);
+	//shaderProgram.SetFloat("uScale");
 
 	//  ------------------------- Render Loop -------------------------
 	while (!glfwWindowShouldClose(window))

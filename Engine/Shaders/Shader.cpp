@@ -80,7 +80,7 @@ void Shader::checkCompileErrors(unsigned int shader, const char* type)
 	}
 }
 
-
+// ------------------------ UNIFORM SETTER ------------------------
 void Shader::SetFloat(const char* name, float value, bool useShader)
 {
 	if (useShader)
@@ -99,7 +99,6 @@ void Shader::SetVector2f(const char* name, float x, float y, bool useShader)
 		this->Activate();
 	glUniform2f(glGetUniformLocation(this->ID, name), x, y);
 }
-/*
 void Shader::SetVector2f(const char* name, const glm::vec2& value, bool useShader)
 {
 	if (useShader)
@@ -136,4 +135,3 @@ void Shader::SetMatrix4(const char* name, const glm::mat4& matrix, bool useShade
 		this->Activate();
 	glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
 }
-*/

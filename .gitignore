@@ -388,7 +388,10 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Others mannually
-x64/Debug/*
-.vs/*
+x64/
+.vs/
 *.vcxproj
 *.vcxproj.filters
+RFengine.vcxproj.filters
+RFengine.vcxproj
+x64/

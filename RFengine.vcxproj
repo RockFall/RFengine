@@ -74,17 +74,25 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,11 +156,13 @@
     <ClCompile Include="Engine\EBO.cpp" />
     <ClCompile Include="Engine\glad.c" />
     <ClCompile Include="Engine\Main.cpp" />
-    <ClCompile Include="Engine\shaderClass.cpp" />
+    <ClCompile Include="Engine\ResourceManager\ResourceManager.cpp" />
+    <ClCompile Include="Engine\Shaders\Shader.cpp" />
     <ClCompile Include="Engine\stb.cpp" />
-    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\Texture\Texture2D.cpp" />
     <ClCompile Include="Engine\VAO.cpp" />
     <ClCompile Include="Engine\VBO.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\default.frag" />
@@ -160,10 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\EBO.h" />
-    <ClInclude Include="Engine\shaderClass.h" />
-    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\ResourceManager\ResourceManager.h" />
+    <ClInclude Include="Engine\Shaders\Shader.h" />
+    <ClInclude Include="Engine\Texture\Texture2D.h" />
     <ClInclude Include="Engine\VAO.h" />
     <ClInclude Include="Engine\VBO.h" />
+    <ClInclude Include="Game\Game.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png" />

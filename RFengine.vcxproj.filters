@@ -33,7 +33,7 @@
     <ClCompile Include="Engine\Main.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\shaderClass.cpp">
+    <ClCompile Include="Engine\Shaders\Shader.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Engine\VAO.cpp">
@@ -45,7 +45,13 @@
     <ClCompile Include="Engine\stb.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Texture.cpp">
+    <ClCompile Include="Engine\Texture\Texture2D.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ResourceManager\ResourceManager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,7 +64,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\shaderClass.h">
+    <ClInclude Include="Engine\Shaders\Shader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Engine\VBO.h">
@@ -70,7 +76,13 @@
     <ClInclude Include="Engine\VAO.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Texture.h">
+    <ClInclude Include="Engine\Texture\Texture2D.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ResourceManager\ResourceManager.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
