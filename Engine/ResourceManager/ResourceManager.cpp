@@ -15,7 +15,8 @@ std::map<std::string, Shader>       ResourceManager::Shaders;
 Shader ResourceManager::LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name)
 {
     // Creates and add shader to global map
-    Shaders[name] = LoadShaderFromFile(vertexFile, fragmentFile, geometryFile);
+    //Shaders[name] = LoadShaderFromFile(vertexFile, fragmentFile, geometryFile);
+    Shaders[name] = AlternativeLoadShaderFromFile(vertexFile, fragmentFile, geometryFile);
     return Shaders[name];
 }
 
@@ -47,6 +48,10 @@ void ResourceManager::Clear()
 
 Shader ResourceManager::LoadShaderFromFile(const char* vertexFile, const char* fragmentFile, const char* geometryFile)
 {
+    // CURRENTLY NOT USED
+    // TO DO: COMPARE EFFICIENCY
+    // TO DO: CHECK FILE EXISTANCE AND OTHER ERRORS
+
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;

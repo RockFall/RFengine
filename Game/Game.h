@@ -1,6 +1,9 @@
 #ifndef GAME_CLASS_H
 #define GAME_CLASS_H
 
+#include "../Engine/ResourceManager/ResourceManager.h"
+#include "../Engine/SpriteRenderer/SpriteRenderer.h"
+
 // Represents the current state of the game
 enum GameState {
     GAME_ACTIVE,
@@ -17,9 +20,9 @@ public:
     // Hold input data
     bool         keys[1024];
     // Resolution of the game
-    unsigned int weidth, height;
+    unsigned int width, height;
 
-    // constructor/destructor
+    // ---- CONSTRUCTOR/DESTRUCTOR ----
     Game(unsigned int width, unsigned int height);
     ~Game();
 

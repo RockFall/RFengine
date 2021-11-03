@@ -21,30 +21,33 @@ public:
     // Resource storage
     static std::map<std::string, Shader>    Shaders;
     static std::map<std::string, Texture2D> Textures;
-
     
 
     // From given vertex, fragment and optionally geometry shaders source codes, 
     // it loads all shaders, creating multiple Shader instances and returning them. 
     // -> 'geometryFile' can be nullptr and will not be loaded
     static Shader LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name);
+
     // Returns shader with given name from global map
     static Shader GetShader(std::string name);
+
     // Load and create a Texture from a given file
     static Texture2D LoadTexture(const char* filePath, bool alpha, std::string name);
+
     // Returns texture with given name from global map
     static Texture2D GetTexture(std::string name);
+
     // De-allocates all loaded shaders and textures
     static void Clear();
 private:
-    // Private Constructor to keep from creating instances
+    // Private Constructor so we can keep from creating instances
     ResourceManager() { }
-    // Do the Loading
+    // Do the Loading of Shaders and Textures
     static Shader LoadShaderFromFile(const char* vertexFile, const char* fragmentFile, const char* geometryFile = nullptr);
     static Texture2D LoadTextureFromFile(const char* file, bool alpha);
 
-    // Alternative versions
-    Shader AlternativeLoadShaderFromFile(const char* vertexFile, const char* fragmentFile, const char* geometryFile);
+    // Alternative version - with this we check for File existance
+    static Shader AlternativeLoadShaderFromFile(const char* vertexFile, const char* fragmentFile, const char* geometryFile);
 };
 
 #endif

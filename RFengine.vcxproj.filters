@@ -54,12 +54,15 @@
     <ClCompile Include="Engine\ResourceManager\ResourceManager.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\SpriteRenderer\SpriteRenderer.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\Shaders\default.vert">
+    <None Include="Engine\Shaders\sprite.vs">
       <Filter>Arquivos de Recurso\Shaders</Filter>
     </None>
-    <None Include="Engine\Shaders\default.frag">
+    <None Include="Engine\Shaders\sprite.frag">
       <Filter>Arquivos de Recurso\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -83,6 +86,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ResourceManager\ResourceManager.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SpriteRenderer\SpriteRenderer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

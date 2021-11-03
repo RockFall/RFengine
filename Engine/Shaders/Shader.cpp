@@ -47,15 +47,16 @@ void Shader::CompileNLink(const char* vertexSource, const char* fragmentSource, 
 		glDeleteShader(geometryShader);
 }
 
-void Shader::Activate() {
-	glUseProgram(ID);
+Shader &Shader::Activate() {
+	glUseProgram(this->ID);
+	return *this;
 }
 
 void Shader::Delete() {
 	glDeleteProgram(ID);
 }
 
-void Shader::checkCompileErrors(unsigned int shader, const char* type)
+void Shader::checkCompileErrors(GLuint shader, const char* type)
 {
 	// Error code from:
 	//	https://www.khronos.org/opengl/wiki/Shader_Compilation
@@ -67,6 +68,11 @@ void Shader::checkCompileErrors(unsigned int shader, const char* type)
 		if (success == GL_FALSE) {
 			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
 			std::cout << "!!! SHADER_COMPILATION_ERROR: Type:" << type << "\n"
+				<< infoLog << "\n - ---------------------------------------- -" << std::endl;
+		}
+		else {
+			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+			std::cout << "!!! SHADER_COMPILATION SUCCEDED???: Type:" << type << "\n"
 				<< infoLog << "\n - ---------------------------------------- -" << std::endl;
 		}
 	}

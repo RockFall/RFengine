@@ -37,7 +37,7 @@ public:
 	void CompileNLink(const char* vertexSource, const char* fragmentSource, const char* geometrySource = nullptr);
 
 	// Activates the Shader Program
-	void Activate();
+	Shader &Activate();
 	// Deletes the Shader Program
 	void Delete();
 	
@@ -53,7 +53,7 @@ public:
 	void SetMatrix4(const char* name, const glm::mat4& matrix, bool useShader = false);
 private:
 	// Checks for error on compilation or linking of shaders and prints them
-	void checkCompileErrors(unsigned int shader, const char* type);
+	void checkCompileErrors(GLuint shader, const char* type);
 };
 
 #endif
