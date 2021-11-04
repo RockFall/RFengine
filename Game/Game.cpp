@@ -42,14 +42,9 @@ void Game::Init()
 	Renderer = new SpriteRenderer(spriteShader);
 
 	// Loading tetures
-	LoadAllTextures();
+	GameEditor::LoadAllTextures();
 
-	GameEditor::LoadInitialScene(*this);
-}
-
-void Game::LoadAllTextures()
-{
-	ResourceManager::LoadTexture("Resources/Linfocito_B.png", true, "linfocito_b");
+	GameEditor::LoadInitialScene(this->width, this->height);
 }
 
 // Called every frame first
@@ -65,16 +60,8 @@ void Game::Update(float dt)
 // Called every frame at last
 void Game::Render()
 {
-	// Do the rendering textures in their given location
-	/*Texture2D linfocitoTex = ResourceManager::GetTexture("linfocito_b");
-	Renderer->DrawSprite(
-		linfocitoTex,
-		glm::vec2(this->width/2 - 50.0f, this->height-150.0f),
-		glm::vec2(100.0f, 100.0f),
-		0.0f,
-		glm::vec3(1.0f, 1.0f, 1.0f));
-	*/
-
+	// Do the rendering of all GameObjects on Scene 
+	// in their current location
 	for (auto iter : GameEditor::CurrentObjects)
 	{
 		iter.second.Draw(*Renderer);

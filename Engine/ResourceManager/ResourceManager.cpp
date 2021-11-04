@@ -134,7 +134,7 @@ std::string get_file_contents(const char* filename) {
 
 Texture2D ResourceManager::LoadTextureFromFile(const char* filePath, bool alpha)
 {
-    stbi_set_flip_vertically_on_load(true);
+    //stbi_set_flip_vertically_on_load(false);
 
     // create texture object
     Texture2D texture;

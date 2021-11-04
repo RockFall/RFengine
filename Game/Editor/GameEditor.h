@@ -8,8 +8,6 @@
 #include "../../Engine/SpriteRenderer/SpriteRenderer.h"
 #include "../../Engine/GameObject/GameObject.h"
 
-#include "../Game.h"
-
 // Responsible for dealing with the selection of Textures to load
 // and creation of GameObjects
 class GameEditor
@@ -17,7 +15,11 @@ class GameEditor
 public:
 	static std::map<std::string, GameObject> CurrentObjects;
 
-	static void LoadInitialScene(Game *game);
+	static void LoadInitialScene(unsigned int width, unsigned int height);
+
+	static void LoadAllTextures();
+private:
+	GameEditor() { }
 };
 
 #endif
