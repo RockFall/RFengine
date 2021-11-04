@@ -3,8 +3,9 @@
 
 #include "../Shaders/Shader.h"
 #include "../Texture/Texture2D.h"
-#include "../VAO.h"
-#include "../VBO.h"
+
+#include "../Buffers/VAO.h"
+#include "../Buffers/VBO.h"
 
 class SpriteRenderer
 {

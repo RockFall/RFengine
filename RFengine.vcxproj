@@ -153,7 +153,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\EBO.cpp" />
+    <ClCompile Include="Game\Editor\GameEditor.cpp" />
+    <ClCompile Include="Engine\Buffers\EBO.cpp" />
+    <ClCompile Include="Engine\GameObject\GameObject.cpp" />
     <ClCompile Include="Engine\glad.c" />
     <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\ResourceManager\ResourceManager.cpp" />
@@ -161,8 +163,8 @@
     <ClCompile Include="Engine\SpriteRenderer\SpriteRenderer.cpp" />
     <ClCompile Include="Engine\stb.cpp" />
     <ClCompile Include="Engine\Texture\Texture2D.cpp" />
-    <ClCompile Include="Engine\VAO.cpp" />
-    <ClCompile Include="Engine\VBO.cpp" />
+    <ClCompile Include="Engine\Buffers\VAO.cpp" />
+    <ClCompile Include="Engine\Buffers\VBO.cpp" />
     <ClCompile Include="Game\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,13 +172,15 @@
     <None Include="Engine\Shaders\sprite.vs" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\EBO.h" />
+    <ClInclude Include="Game\Editor\GameEditor.h" />
+    <ClInclude Include="Engine\Buffers\EBO.h" />
+    <ClInclude Include="Engine\GameObject\GameObject.h" />
     <ClInclude Include="Engine\ResourceManager\ResourceManager.h" />
     <ClInclude Include="Engine\Shaders\Shader.h" />
     <ClInclude Include="Engine\SpriteRenderer\SpriteRenderer.h" />
     <ClInclude Include="Engine\Texture\Texture2D.h" />
-    <ClInclude Include="Engine\VAO.h" />
-    <ClInclude Include="Engine\VBO.h" />
+    <ClInclude Include="Engine\Buffers\VAO.h" />
+    <ClInclude Include="Engine\Buffers\VBO.h" />
     <ClInclude Include="Game\Game.h" />
   </ItemGroup>
   <ItemGroup>

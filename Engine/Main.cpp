@@ -14,17 +14,17 @@
 
 #include "./ResourceManager/ResourceManager.h"
 #include "../Game/Game.h"
-#include "VBO.h"
-#include "VAO.h"
-#include "EBO.h"
+#include "Buffers/VBO.h"
+#include "Buffers/VAO.h"
+#include "Buffers/EBO.h"
 
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 // Base screen size
-const unsigned int SCREEN_WIDTH = 640;
-const unsigned int SCREEN_HEIGHT = 800;
+const unsigned int SCREEN_WIDTH = 600;
+const unsigned int SCREEN_HEIGHT = 700;
 
 Game Healthier(SCREEN_WIDTH, SCREEN_HEIGHT);
 

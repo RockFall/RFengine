@@ -1,8 +1,7 @@
 #ifndef GAME_CLASS_H
 #define GAME_CLASS_H
 
-#include "../Engine/ResourceManager/ResourceManager.h"
-#include "../Engine/SpriteRenderer/SpriteRenderer.h"
+#include "Editor/GameEditor.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -38,6 +37,9 @@ public:
     // Called after Update
     // Do the rendering of current frame
     void Render();
+private:
+
+    void LoadAllTextures();
 };
 
 #endif
