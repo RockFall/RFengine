@@ -153,6 +153,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Bullet\Bullet.cpp" />
+    <ClCompile Include="Engine\GameObject\Attribute.cpp" />
+    <ClCompile Include="Game\AttributeManager\AttributeManager.cpp" />
     <ClCompile Include="Game\Editor\GameEditor.cpp" />
     <ClCompile Include="Engine\Buffers\EBO.cpp" />
     <ClCompile Include="Engine\GameObject\GameObject.cpp" />
@@ -166,12 +169,17 @@
     <ClCompile Include="Engine\Buffers\VAO.cpp" />
     <ClCompile Include="Engine\Buffers\VBO.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\sprite.frag" />
     <None Include="Engine\Shaders\sprite.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Bullet\Bullet.h" />
+    <ClInclude Include="Engine\GameObject\Attribute.h" />
+    <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="Game\AttributeManager\AttributeManager.h" />
     <ClInclude Include="Game\Editor\GameEditor.h" />
     <ClInclude Include="Engine\Buffers\EBO.h" />
     <ClInclude Include="Engine\GameObject\GameObject.h" />
@@ -182,6 +190,7 @@
     <ClInclude Include="Engine\Buffers\VAO.h" />
     <ClInclude Include="Engine\Buffers\VBO.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png" />

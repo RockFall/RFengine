@@ -4,7 +4,7 @@
 SpriteRenderer* Renderer;
 
 Game::Game(unsigned int width, unsigned int height)
-	: state(GAME_ACTIVE), keys(), width(width), height(height)
+	: state(GameState::GAME_ACTIVE), keys(), mousePos(0.0f, 0.0f), width(width), height(height)
 {
 
 }
@@ -42,19 +42,37 @@ void Game::Init()
 	Renderer = new SpriteRenderer(spriteShader);
 
 	// Loading tetures
-	GameEditor::LoadAllTextures();
+	LoadAllTextures();
 
 	GameEditor::LoadInitialScene(this->width, this->height);
+
+	AttributeManager::InitializeAttributes();
+}
+
+void Game::LoadAllTextures()
+{
+	ResourceManager::LoadTexture("Resources/Linfocito_B.png", true, "Player");
+	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Bullet");
 }
 
 // Called every frame first
 void Game::ProcessInput(float dt)
 {
+	// ESC to quit game
+	if (keys[GLFW_KEY_ESCAPE] == true) {
+		state = GameState::GAME_CLOSE;
+		return;
+	}
+
+	if (this->state == GameState::GAME_ACTIVE) {
+		
+	}
 }
 
 // Called every frame second
 void Game::Update(float dt)
 {
+	AttributeManager::Update(dt, keys, mousePos);
 }
 
 // Called every frame at last
@@ -64,8 +82,14 @@ void Game::Render()
 	// in their current location
 	for (auto iter : GameEditor::CurrentObjects)
 	{
-		iter.second.Draw(*Renderer);
-	}
+		GameObject go = iter.second;
+		Renderer->DrawSprite(
+			go.sprite.texture,
+			go.transform.position,
+			go.transform.size,
+			go.transform.rotation,
+			go.sprite.color);
+	} 
 }
 
 

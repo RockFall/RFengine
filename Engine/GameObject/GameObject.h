@@ -4,8 +4,15 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include "../Texture/Texture2D.h"
-#include "../SpriteRenderer/SpriteRenderer.h"
+#include "../ResourceManager/ResourceManager.h"
+
+#include "Transform.h"
+
+
+struct Sprite {
+	Texture2D texture;
+	glm::vec3 color;
+};
 
 // An element of a scene. 
 // The GameObject holds information of it's position, size, velocity
@@ -16,24 +23,28 @@
 class GameObject {
 public:
 	// ----- State Data -----
-	glm::vec2 position, size, velocity;
-	glm::vec3 color;
-	float rotation;
+	Transform transform;
+	Sprite sprite;
+
 	bool isSolid;
 	bool hasBeenDestroyed;
 
-	// Rendering State
-	Texture2D sprite;
-
-
 	// ----- Constructors -----
 	GameObject();
-	GameObject(glm::vec2 pos, glm::vec2 size, Texture2D sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
+	GameObject(std::string name,int id, glm::vec2 pos, glm::vec2 size, Texture2D texture, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
 
-	// Draw the Sprite
-	virtual void Draw(SpriteRenderer& renderer);
 
+	// ---- GETTERS ----
+	std::string GetName();
+	int GetID();
+	std::string GetFormattedName();
+
+	// Unites name and id into name_id
+	static std::string FormattedName(std::string name, int id);
+
+private:
+	std::string name;
+	int id;
 };
-
 
 #endif

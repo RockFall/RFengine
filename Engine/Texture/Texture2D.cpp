@@ -47,16 +47,6 @@ void Texture2D::Generate(unsigned char* imageBytes, GLenum slot) {
 	glBindTexture(type, 0);
 }
 
-void Texture2D::texUnit(Shader& shader, const char* uniform, GLuint unit)
-{
-	// Gets uniform's location
-	GLuint uTex0 = glGetUniformLocation(shader.ID, uniform);
-	// Shader needs to be activated before changing uniform's value
-	shader.Activate();
-	// Set's the value of uniform -> the unit slot that the shader will use
-	glUniform1i(uTex0, unit);
-}
-
 void Texture2D::Bind(int slot)
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
