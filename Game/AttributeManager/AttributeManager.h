@@ -1,7 +1,11 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
-#include "../../Engine/GameObject/Attribute.h"
+#include <glm/glm.hpp>
+
+#include "../GameContext/GameContext.h"
+
+class Attribute;
 
 // Responsible for creating attributes that unite
 // Script and GameObject
@@ -9,14 +13,14 @@
 class AttributeManager
 {
 public:
-	static std::map<std::string, Attribute> CurrentAttributes;
+	//static std::map<std::string, Attribute> CurrentAttributes;
 
 	// Creates all attributes of the initial scene
 	static void InitializeAttributes();
 	// Calls every Script Update
 	static void Update(float dt, bool keys[], glm::vec2 mousePos);
 	// Creates and Adds an Attribute on a GameObject
-	static void AddGameObjectAttribute(std::string GOName, AttributeType type);
+	static void AddGameObjectAttribute(std::string GOName, std::string type);
 };
 
 #endif

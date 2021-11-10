@@ -1,30 +1,35 @@
 #ifndef ATTRIBUTE_H
 #define ATTRIBUTE_H
 
-#include "../../Game/Player/Player.h"
+#include "../../Game/Scripts/Player/Player.h"
+#include "../../Game/Scripts/Bullet/Bullet.h"
 
 class GameObject;
-class Transform;
 
 enum class AttributeType {
 	PLAYER,
+	BULLET,
 	ENEMY
 };
 
 class Attribute {
 public:
 	GameObject *gameObject;
-	Transform *transform;
+
+	std::string type;
 
 	Player playerScript;
+	Bullet bulletScript;
 
-	Attribute() : gameObject(nullptr), transform(nullptr), playerScript(nullptr) { }
+	Attribute() : gameObject(nullptr), playerScript(nullptr) { }
 
-	Attribute(const Attribute& a) : gameObject(a.gameObject), transform(a.transform), playerScript(a.playerScript) { }
+	Attribute(const Attribute& a) : gameObject(a.gameObject), playerScript(a.playerScript) { }
 
-	Attribute(GameObject *go, AttributeType type);
+	Attribute(GameObject &go, std::string type);
 
 	~Attribute();
+
+	void Update(float dt, bool keys[], glm::vec2 mousePos);
 };
 
 #endif

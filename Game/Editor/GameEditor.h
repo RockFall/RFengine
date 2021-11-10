@@ -6,14 +6,15 @@
 
 #include "../../Engine/GameObject/GameObject.h"
 
-
+class AttributeManager;
 
 // Responsible for dealing with the selection of Textures to load
 // and creation of GameObjects
 class GameEditor
 {
 public:
-	static std::map<std::string, GameObject> CurrentObjects;
+	//static std::map<std::string, GameObject> CurrentObjects;
+
 
 	// Creates and loads all GameObjects defined
 	static void LoadInitialScene(unsigned int width, unsigned int height);

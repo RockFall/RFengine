@@ -53,6 +53,7 @@ void Game::LoadAllTextures()
 {
 	ResourceManager::LoadTexture("Resources/Linfocito_B.png", true, "Player");
 	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Bullet");
+	ResourceManager::LoadTexture("Resources/Virus.png", true, "EnemyV");
 }
 
 // Called every frame first
@@ -80,9 +81,9 @@ void Game::Render()
 {
 	// Do the rendering of all GameObjects on Scene 
 	// in their current location
-	for (auto iter : GameEditor::CurrentObjects)
+	for (auto iter : GameContext::CurrentObjects)
 	{
-		GameObject go = iter.second;
+		GameObject go = *iter.second;
 		Renderer->DrawSprite(
 			go.sprite.texture,
 			go.transform.position,
