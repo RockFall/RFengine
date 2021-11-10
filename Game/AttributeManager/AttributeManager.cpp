@@ -21,6 +21,6 @@ void AttributeManager::Update(float dt, bool keys[], glm::vec2 mousePos)
 }
 
 void AttributeManager::AddGameObjectAttribute(std::string GOName, std::string type) {
-	GameObject &playerGO = *GameContext::CurrentObjects[GOName];
+	std::shared_ptr<GameObject> playerGO = GameContext::CurrentObjects[GOName];
 	GameContext::CurrentAttributes[GOName] = std::make_shared<Attribute>(playerGO, type);
 }

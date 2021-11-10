@@ -11,7 +11,7 @@ class Bullet
 public:
 	// ------ CONSTRUCTOR ------
 	Bullet() : speed(0.0f), bulletGO(nullptr) { }
-	Bullet(GameObject* go);
+	Bullet(std::shared_ptr<GameObject> go);
 	~Bullet();
 
 	// Called first and once
@@ -22,9 +22,12 @@ public:
 	// Makes the bullet GameObject move in the Y-axis
 	void DoMovement(float dt);
 
+	// Checks if the bullet is out of the screen, is so, destroys it
+	void CheckOutScreen();
+
 private:
 	// Player GameObject
-	GameObject *bulletGO;
+	std::shared_ptr<GameObject> bulletGO;
 
 	float speed;
 };

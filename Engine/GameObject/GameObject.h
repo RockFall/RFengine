@@ -25,8 +25,8 @@ public:
 	// ----- State Data -----
 	Transform transform;
 	Sprite sprite;
-
 	bool isSolid;
+
 	bool hasBeenDestroyed;
 
 	// ----- Constructors -----

@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "../../Editor/GameEditor.h"
 
-Enemy::Enemy(GameObject* go) : enemyGO(go), speed(0.0f)
+Enemy::Enemy(std::shared_ptr<GameObject> go) : enemyGO(go), speed(0.0f)
 {
 	Start();
 }

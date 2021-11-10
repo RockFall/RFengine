@@ -74,6 +74,21 @@ void Game::ProcessInput(float dt)
 void Game::Update(float dt)
 {
 	AttributeManager::Update(dt, keys, mousePos);
+
+	// Checks and destroy gameObjects if needed
+	for (auto it = GameContext::CurrentObjects.cbegin(), next_it = it; it != GameContext::CurrentObjects.cend(); it = next_it)
+	{
+		++next_it;
+		if (it->second->hasBeenDestroyed) {
+			std::string name = it->second->GetFormattedName();
+			int eA = GameContext::CurrentAttributes.erase(name);
+			int eO = GameContext::CurrentObjects.erase(name);
+			if (eA && eO)
+				std::cout << "DESTROYED: " << name << std::endl;
+			else if (eO)
+				std::cout << "DESTROYED OBJECT WITHOUT ATTRIBUTE: " << name << std::endl;
+		}
+	}
 }
 
 // Called every frame at last

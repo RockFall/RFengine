@@ -1,9 +1,6 @@
 #include "GameEditor.h"
 #include "../AttributeManager/AttributeManager.h"
 
-// Instantiation of static variables
-//std::map<std::string, GameObject> GameEditor::CurrentObjects;
-
 void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 {
 	// ---- Creating Player ----
@@ -45,5 +42,11 @@ void GameEditor::CreateGameObject(std::string name, glm::vec2 pos, glm::vec2 siz
 	GameContext::CurrentObjects[formatedName] = std::make_shared<GameObject>
 		(name, count, pos, size, ResourceManager::GetTexture(name));
 
+	// Calls creation of Attribute for the GameObject 'formatedName' and type 'name'
 	AttributeManager::AddGameObjectAttribute(formatedName, name);
+}
+
+void GameEditor::DestroyGameObject(std::string name)
+{
+	GameContext::CurrentObjects[name]->hasBeenDestroyed = true;
 }

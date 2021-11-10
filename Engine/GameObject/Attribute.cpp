@@ -1,6 +1,6 @@
 #include "Attribute.h"
 
-Attribute::Attribute(GameObject& go, std::string type) : gameObject(&go)
+Attribute::Attribute(std::shared_ptr<GameObject> go, std::string type) : gameObject(go)
 {
 	this->type = type;
 

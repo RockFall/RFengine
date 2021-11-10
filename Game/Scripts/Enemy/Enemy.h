@@ -11,7 +11,7 @@ class Enemy
 public:
 	// ------ CONSTRUCTOR ------
 	Enemy() : speed(0.0f), enemyGO(nullptr) { }
-	Enemy(GameObject* go);
+	Enemy(std::shared_ptr<GameObject> go);
 	~Enemy();
 
 	// Called first and once
@@ -24,7 +24,7 @@ public:
 
 private:
 	// Player GameObject
-	GameObject* enemyGO;
+	std::shared_ptr<GameObject> enemyGO;
 
 	float speed;
 };

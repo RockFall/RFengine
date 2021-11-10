@@ -155,7 +155,6 @@
   <ItemGroup>
     <ClCompile Include="Game\Scripts\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\GameContext\GameContext.cpp" />
-    <ClCompile Include="Game\Bullet\Bullet.cpp" />
     <ClCompile Include="Engine\GameObject\Attribute.cpp" />
     <ClCompile Include="Game\AttributeManager\AttributeManager.cpp" />
     <ClCompile Include="Game\Editor\GameEditor.cpp" />
@@ -181,7 +180,6 @@
   <ItemGroup>
     <ClInclude Include="Game\Scripts\Enemy\Enemy.h" />
     <ClInclude Include="Game\GameContext\GameContext.h" />
-    <ClInclude Include="Game\Bullet\Bullet.h" />
     <ClInclude Include="Engine\GameObject\Attribute.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
     <ClInclude Include="Game\AttributeManager\AttributeManager.h" />

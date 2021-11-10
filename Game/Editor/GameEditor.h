@@ -13,13 +13,12 @@ class AttributeManager;
 class GameEditor
 {
 public:
-	//static std::map<std::string, GameObject> CurrentObjects;
-
-
 	// Creates and loads all GameObjects defined
 	static void LoadInitialScene(unsigned int width, unsigned int height);
 
 	static void CreateGameObject(std::string name, glm::vec2 pos, glm::vec2 size = glm::vec2(100.0f, 100.0f));
+
+	static void DestroyGameObject(std::string name);
 private:
 	// Private constructor so this static class cannot be wrongfully instantiated
 	GameEditor() { }

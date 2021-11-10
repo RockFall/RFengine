@@ -11,7 +11,7 @@ class Player
 public:
 	// ------ CONSTRUCTOR ------
 	Player() : timeSinceLastShot(0.0f), shootingRate(0), lives(0), playerGO(nullptr) { }
-	Player(GameObject* go);
+	Player(std::shared_ptr<GameObject> go);
 	~Player();
 
 	// Called first and once
@@ -27,7 +27,7 @@ public:
 
 private:
 	// Player GameObject
-	GameObject *playerGO;
+	std::shared_ptr<GameObject> playerGO;
 
 	int lives;
 

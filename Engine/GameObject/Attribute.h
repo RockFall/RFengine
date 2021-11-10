@@ -14,7 +14,7 @@ enum class AttributeType {
 
 class Attribute {
 public:
-	GameObject *gameObject;
+	std::shared_ptr<GameObject> gameObject;
 
 	std::string type;
 
@@ -25,7 +25,7 @@ public:
 
 	Attribute(const Attribute& a) : gameObject(a.gameObject), playerScript(a.playerScript) { }
 
-	Attribute(GameObject &go, std::string type);
+	Attribute(std::shared_ptr<GameObject> go, std::string type);
 
 	~Attribute();
 
