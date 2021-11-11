@@ -25,6 +25,10 @@ public:
 	// Checks if the bullet is out of the screen, is so, destroys it
 	void CheckOutScreen();
 
+	void DoCollisions();
+
+	bool CheckCollision(std::shared_ptr<GameObject> one, std::shared_ptr<GameObject> two);
+
 private:
 	// Player GameObject
 	std::shared_ptr<GameObject> gameObject;

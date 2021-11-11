@@ -53,6 +53,7 @@ void Game::LoadAllTextures()
 	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Bullet");
 	ResourceManager::LoadTexture("Resources/Virus.png", true, "EnemyV");
 	ResourceManager::LoadTexture("Resources/None.png", true, "None");
+	ResourceManager::LoadTexture("Resources/Background.png", true, "Background");
 }
 
 // Called every frame first

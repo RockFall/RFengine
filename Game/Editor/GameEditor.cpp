@@ -3,6 +3,10 @@
 
 void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 {
+	// --------- BACKGROUND -------------
+	
+	CreateGameObject("Background", glm::vec2(0.0f), true, glm::vec2(600.0f, 700.0f), false);
+
 	// ---- Creating Player ----
 
 	// Initial size of the player paddle
@@ -23,7 +27,7 @@ void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 	// ------------------------------------------------------------
 }
 
-std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size) {
+std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size, bool hasScript) {
 	int count = 0;
 	// While _0 _1 _2 ... exists, keeps counting
 	// ultil findind an 'name_N' that doesn't exists
@@ -45,7 +49,8 @@ std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool h
 		type = "Enemy";
 	}
 
-	AttributeManager::AddGameObjectAttribute(formatedName, type);
+	if (hasScript)
+		AttributeManager::AddGameObjectAttribute(formatedName, type);
 
 	return formatedName;
 }

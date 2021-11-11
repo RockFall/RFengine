@@ -12,7 +12,7 @@ Bullet::~Bullet()
 
 void Bullet::Start()
 {
-	speed = 200.0f;
+	speed = 400.0f;
 }
 
 void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
@@ -20,6 +20,8 @@ void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
 	DoMovement(dt);
 	
 	CheckOutScreen();
+
+	DoCollisions();
 }
 
 void Bullet::DoMovement(float dt)
@@ -32,4 +34,29 @@ void Bullet::CheckOutScreen() {
 	{
 		GameEditor::DestroyGameObject(gameObject->GetFormattedName());
 	}
+}
+
+void Bullet::DoCollisions()
+{
+	for (auto enemyIt : GameContext::CurrentObjects) {
+		if (enemyIt.second->hasBeenDestroyed == false && enemyIt.second->GetName() == "EnemyV") {
+			if (CheckCollision(enemyIt.second, this->gameObject)) {
+				GameEditor::DestroyGameObject(enemyIt.second->GetFormattedName());
+				GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
+				return;
+			}
+		}
+	}
+}
+
+bool Bullet::CheckCollision(std::shared_ptr<GameObject> one, std::shared_ptr<GameObject> two)
+{
+	// collision x-axis?
+	bool collisionX = one->transform.position.x + one->transform.size.x >= two->transform.position.x &&
+		two->transform.position.x + two->transform.size.x >= one->transform.position.x;
+	// collision y-axis?
+	bool collisionY = one->transform.position.y + one->transform.size.y >= two->transform.position.y &&
+		two->transform.position.y + two->transform.size.y >= one->transform.position.y;
+	// collision only if on both axes
+	return collisionX && collisionY;
 }
