@@ -1,16 +1,16 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "../../Engine/GameObject/GameObject.h"
+#include "../BaseBehaviour.h"
 
 #include<glad/glad.h>
 #include<glfw/glfw3.h>
 
-class Enemy
+class Enemy : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Enemy() : speed(0.0f), enemyGO(nullptr) { }
+	Enemy() : movementRange(0.0f), originalPos(0.0f), speed(0.0f), gameObject(nullptr) { }
 	Enemy(std::shared_ptr<GameObject> go);
 	~Enemy();
 
@@ -24,9 +24,11 @@ public:
 
 private:
 	// Player GameObject
-	std::shared_ptr<GameObject> enemyGO;
+	std::shared_ptr<GameObject> gameObject;
 
 	float speed;
+	glm::vec2 originalPos;
+	unsigned int movementRange;
 };
 
 #endif

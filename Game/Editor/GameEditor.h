@@ -16,9 +16,11 @@ public:
 	// Creates and loads all GameObjects defined
 	static void LoadInitialScene(unsigned int width, unsigned int height);
 
-	static void CreateGameObject(std::string name, glm::vec2 pos, glm::vec2 size = glm::vec2(100.0f, 100.0f));
+	static std::string CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite = true, glm::vec2 size = glm::vec2(100.0f, 100.0f));
 
 	static void DestroyGameObject(std::string name);
+
+	static void GameObjectSetSolid(std::string name, bool isSolid);
 private:
 	// Private constructor so this static class cannot be wrongfully instantiated
 	GameEditor() { }

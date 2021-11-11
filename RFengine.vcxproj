@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Scripts\GameLevel\GameLevel.cpp" />
     <ClCompile Include="Game\Scripts\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\GameContext\GameContext.cpp" />
     <ClCompile Include="Engine\GameObject\Attribute.cpp" />
@@ -178,6 +179,8 @@
     <None Include="Engine\Shaders\sprite.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Scripts\BaseBehaviour.h" />
+    <ClInclude Include="Game\Scripts\GameLevel\GameLevel.h" />
     <ClInclude Include="Game\Scripts\Enemy\Enemy.h" />
     <ClInclude Include="Game\GameContext\GameContext.h" />
     <ClInclude Include="Engine\GameObject\Attribute.h" />
@@ -198,6 +201,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png" />
+    <Image Include="Resources\Anticorpo.png" />
+    <Image Include="Resources\drama.png" />
+    <Image Include="Resources\Linfocito_B.png" />
+    <Image Include="Resources\None.png" />
+    <Image Include="Resources\Virus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Levels\level01.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

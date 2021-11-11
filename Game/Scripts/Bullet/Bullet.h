@@ -1,16 +1,16 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include "../../Engine/GameObject/GameObject.h"
+#include "../BaseBehaviour.h"
 
 #include<glad/glad.h>
 #include<glfw/glfw3.h>
 
-class Bullet
+class Bullet : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Bullet() : speed(0.0f), bulletGO(nullptr) { }
+	Bullet() : speed(0.0f), gameObject(nullptr) { }
 	Bullet(std::shared_ptr<GameObject> go);
 	~Bullet();
 
@@ -27,7 +27,7 @@ public:
 
 private:
 	// Player GameObject
-	std::shared_ptr<GameObject> bulletGO;
+	std::shared_ptr<GameObject> gameObject;
 
 	float speed;
 };

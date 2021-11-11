@@ -33,6 +33,12 @@ Texture2D ResourceManager::LoadTexture(const char* file, bool alpha, std::string
 
 Texture2D ResourceManager::GetTexture(std::string name)
 {
+    if (Textures.find(name) == Textures.end()) {
+        std::cout << "RESOURCE MANAGER: Texture \""<< name << "\" not found on internal std::map.\n" <<
+            "Have you added it to Game::LoadAllTextures ?\n-----------------------------------------" << std::endl;
+        return Texture2D();
+    }
+
     return Textures[name];
 }
 

@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include "../../Editor/GameEditor.h"
 
-Bullet::Bullet(std::shared_ptr<GameObject> go) :  bulletGO(go), speed(0.0f)
+Bullet::Bullet(std::shared_ptr<GameObject> go) :  gameObject(go), speed(0.0f)
 {
 	Start();
 }
@@ -24,12 +24,12 @@ void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
 
 void Bullet::DoMovement(float dt)
 {
-	bulletGO->transform.position.y -= speed * dt;
+	gameObject->transform.position.y -= speed * dt;
 }
 
 void Bullet::CheckOutScreen() {
-	if (bulletGO->transform.position.y < -bulletGO->transform.size.y)
+	if (gameObject->transform.position.y < -gameObject->transform.size.y)
 	{
-		GameEditor::DestroyGameObject(bulletGO->GetFormattedName());
+		GameEditor::DestroyGameObject(gameObject->GetFormattedName());
 	}
 }

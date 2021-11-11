@@ -3,14 +3,10 @@
 
 #include "../../Game/Scripts/Player/Player.h"
 #include "../../Game/Scripts/Bullet/Bullet.h"
+#include "../../Game/Scripts/GameLevel/GameLevel.h"
+#include "../../Game/Scripts/Enemy/Enemy.h"
 
 class GameObject;
-
-enum class AttributeType {
-	PLAYER,
-	BULLET,
-	ENEMY
-};
 
 class Attribute {
 public:
@@ -19,7 +15,9 @@ public:
 	std::string type;
 
 	Player playerScript;
+	Enemy enemyScript;
 	Bullet bulletScript;
+	GameLevel gameLevelScript;
 
 	Attribute() : gameObject(nullptr), playerScript(nullptr) { }
 
@@ -30,6 +28,8 @@ public:
 	~Attribute();
 
 	void Update(float dt, bool keys[], glm::vec2 mousePos);
+
+	void Start();
 };
 
 #endif

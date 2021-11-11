@@ -81,6 +81,9 @@
     <ClCompile Include="Game\Scripts\Enemy\Enemy.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Scripts\GameLevel\GameLevel.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\sprite.vs">
@@ -142,10 +145,34 @@
     <ClInclude Include="Game\Scripts\Enemy\Enemy.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Scripts\GameLevel\GameLevel.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scripts\BaseBehaviour.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png">
       <Filter>Arquivos de Recurso\Textures</Filter>
     </Image>
+    <Image Include="Resources\Anticorpo.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\drama.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\Linfocito_B.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\None.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\Virus.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Levels\level01.txt" />
   </ItemGroup>
 </Project>

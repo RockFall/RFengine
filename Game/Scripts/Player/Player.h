@@ -1,23 +1,23 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "../../Engine/GameObject/GameObject.h"
+#include "../BaseBehaviour.h"
 
 #include<glad/glad.h>
 #include<glfw/glfw3.h>
 
-class Player
+class Player : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Player() : timeSinceLastShot(0.0f), shootingRate(0), lives(0), playerGO(nullptr) { }
+	Player() : timeSinceLastShot(0.0f), shootingRate(0), lives(0), gameObject(nullptr) { }
 	Player(std::shared_ptr<GameObject> go);
 	~Player();
 
 	// Called first and once
 	void Start();
 	// Called every frame
-	void Update(float dt, bool keys[], glm::vec2 mousePos);
+	virtual void Update(float dt, bool keys[], glm::vec2 mousePos);
 
 	// Makes the player GameObject move in the X-axis following the mouse
 	void DoMovement(float dt, bool keys[], glm::vec2 mousePos);
@@ -27,7 +27,7 @@ public:
 
 private:
 	// Player GameObject
-	std::shared_ptr<GameObject> playerGO;
+	std::shared_ptr<GameObject> gameObject;
 
 	int lives;
 

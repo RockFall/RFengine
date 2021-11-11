@@ -3,19 +3,22 @@
 Attribute::Attribute(std::shared_ptr<GameObject> go, std::string type) : gameObject(go)
 {
 	this->type = type;
+	this->playerScript = Player();
+	this->enemyScript = Enemy();
+	this->bulletScript = Bullet();
+	this->gameLevelScript = GameLevel();
 
 	if (type == "Player") {
-		//this->player = new Player(gameObject);
 		this->playerScript = Player(gameObject);
 	}
 	else if (type == "Enemy") {
-
+		this->enemyScript = Enemy(gameObject);
 	}
 	else if (type == "Bullet") {
 		this->bulletScript = Bullet(gameObject);
 	}
-	else{
-		this->playerScript = Player();
+	else if (type == "GameLevel") {
+		this->gameLevelScript = GameLevel(gameObject);
 	}
 }
 
@@ -33,13 +36,19 @@ Attribute::~Attribute()
 void Attribute::Update(float dt, bool keys[], glm::vec2 mousePos)
 {
 	if (type == "Player") {
-		//this->player = new Player(gameObject);
 		this->playerScript.Update(dt, keys, mousePos);
 	}
 	else if (type == "Enemy") {
-
+		this->enemyScript.Update(dt, keys, mousePos);
 	}
 	else if (type == "Bullet") {
 		this->bulletScript.Update(dt, keys, mousePos);
 	}
+	else if (type == "GameLevel") {
+		this->gameLevelScript.Update(dt, keys, mousePos);
+	}
+}
+
+void Attribute::Start()
+{
 }

@@ -16,20 +16,14 @@ void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 
 	CreateGameObject("Player", playerPos);
 
-	// --------------------------
+	// ----------------- GAMELEVEL GAME OBJECT -----------------
 
-	// Test
-	const glm::vec2 ENEMY_SIZE(100.0f, 100.0f);
+	CreateGameObject("GameLevel", glm::vec2(0.0f), false);
 
-	glm::vec2 enemyPos = glm::vec2(
-		width/2.0f - ENEMY_SIZE.x/2.0f,
-		20 + ENEMY_SIZE.y
-	);
-
-	CreateGameObject("EnemyV", enemyPos);
+	// ------------------------------------------------------------
 }
 
-void GameEditor::CreateGameObject(std::string name, glm::vec2 pos, glm::vec2 size) {
+std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size) {
 	int count = 0;
 	// While _0 _1 _2 ... exists, keeps counting
 	// ultil findind an 'name_N' that doesn't exists
@@ -38,15 +32,30 @@ void GameEditor::CreateGameObject(std::string name, glm::vec2 pos, glm::vec2 siz
 	}
 	std::string formatedName = name + "_" + std::to_string(count);
 
-	//GameObject gameObject(name, count, pos, size, ResourceManager::GetTexture(name));
+	std::string texName = name;
+	if (hasSprite == false)
+		texName = "None";
+
 	GameContext::CurrentObjects[formatedName] = std::make_shared<GameObject>
-		(name, count, pos, size, ResourceManager::GetTexture(name));
+		(name, count, pos, size, ResourceManager::GetTexture(texName));
 
 	// Calls creation of Attribute for the GameObject 'formatedName' and type 'name'
-	AttributeManager::AddGameObjectAttribute(formatedName, name);
+	std::string type = name;
+	if (name == "EnemyV") {
+		type = "Enemy";
+	}
+
+	AttributeManager::AddGameObjectAttribute(formatedName, type);
+
+	return formatedName;
 }
 
 void GameEditor::DestroyGameObject(std::string name)
 {
 	GameContext::CurrentObjects[name]->hasBeenDestroyed = true;
+}
+
+void GameEditor::GameObjectSetSolid(std::string name, bool isSolid)
+{
+	GameContext::CurrentObjects[name]->isSolid = isSolid;
 }

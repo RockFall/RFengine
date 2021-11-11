@@ -45,8 +45,6 @@ void Game::Init()
 	LoadAllTextures();
 
 	GameEditor::LoadInitialScene(this->width, this->height);
-
-	AttributeManager::InitializeAttributes();
 }
 
 void Game::LoadAllTextures()
@@ -54,6 +52,7 @@ void Game::LoadAllTextures()
 	ResourceManager::LoadTexture("Resources/Linfocito_B.png", true, "Player");
 	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Bullet");
 	ResourceManager::LoadTexture("Resources/Virus.png", true, "EnemyV");
+	ResourceManager::LoadTexture("Resources/None.png", true, "None");
 }
 
 // Called every frame first
