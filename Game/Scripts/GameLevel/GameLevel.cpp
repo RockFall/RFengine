@@ -1,7 +1,7 @@
 #include "GameLevel.h"
 #include "../../Editor/GameEditor.h"
 
-GameLevel::GameLevel(std::shared_ptr<GameObject> go) : gameObject(go), enemies()
+GameLevel::GameLevel(std::shared_ptr<GameObject> go) : gameObject(go), enemies(), level(0)
 {
 	Start();
 }
@@ -13,15 +13,19 @@ GameLevel::~GameLevel()
 
 void GameLevel::Start()
 {
+    level = 1;
 	Load("Resources/Levels/level01.txt");
 }
 
 void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
-{
-
+{  
+    if (enemies.size() == 0) {
+        std::string fileName = "Resources/Levels/level0" + std::to_string(level) + ".txt";
+        Load(fileName);
+    }
 }
 
-void GameLevel::Load(const char* file)
+void GameLevel::Load(std::string file)
 {
 	// Clear old data
 	enemies.clear();
@@ -76,7 +80,7 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData)
                 std::string ID = GameEditor::CreateGameObject("EnemyV", pos, true, size);
                 GameEditor::GameObjectSetSolid(ID, true);
                 
-                this->enemies.push_back(ID);
+                this->enemies.insert(ID);
             }
             else if (enemyData[y][x] > 1)
             {
@@ -100,6 +104,10 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData)
             }
         }
     }
+}
+
+void GameLevel::EnemyDied(std::string name) {
+    enemies.erase(name);
 }
 
 

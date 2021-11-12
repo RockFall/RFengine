@@ -3,10 +3,6 @@
 Attribute::Attribute(std::shared_ptr<GameObject> go, std::string type) : gameObject(go)
 {
 	this->type = type;
-	this->playerScript = Player();
-	this->enemyScript = Enemy();
-	this->bulletScript = Bullet();
-	this->gameLevelScript = GameLevel();
 
 	if (type == "Player") {
 		this->playerScript = Player(gameObject);

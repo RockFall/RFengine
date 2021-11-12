@@ -1,5 +1,7 @@
 #include "Bullet.h"
 #include "../../Editor/GameEditor.h"
+#include "../GameLevel/GameLevel.h"
+#include "../../../Engine/GameObject/Attribute.h";
 
 Bullet::Bullet(std::shared_ptr<GameObject> go) :  gameObject(go), speed(0.0f)
 {
@@ -41,6 +43,7 @@ void Bullet::DoCollisions()
 	for (auto enemyIt : GameContext::CurrentObjects) {
 		if (enemyIt.second->hasBeenDestroyed == false && enemyIt.second->GetName() == "EnemyV") {
 			if (CheckCollision(enemyIt.second, this->gameObject)) {
+				GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(enemyIt.second->GetFormattedName());
 				GameEditor::DestroyGameObject(enemyIt.second->GetFormattedName());
 				GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
 				return;

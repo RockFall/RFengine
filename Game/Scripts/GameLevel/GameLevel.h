@@ -3,16 +3,17 @@
 
 #include "../BaseBehaviour.h"
 
+#include <set>
 #include <vector>
 
 class GameLevel : BaseBehaviour
 {
 public:
 	// Level State data
-	std::vector<std::string> enemies;
+	std::set<std::string> enemies;
 
 	// ------ CONSTRUCTORS ------
-	GameLevel() : gameObject(nullptr), enemies() { };
+	GameLevel() : gameObject(nullptr), enemies(), level(0) { };
 	GameLevel(std::shared_ptr<GameObject> go);
 	~GameLevel();
 
@@ -21,12 +22,15 @@ public:
 	// Called every frame
 	void Update(float dt, bool keys[], glm::vec2 mousePos);
 
-	void Load(const char* file);
+	void Load(std::string file);
 
 	void GenerateLevel(std::vector<std::vector<char>> enemyData);
 
+	void EnemyDied(std::string name);
+
 private:
 	std::shared_ptr<GameObject> gameObject;
+	int level;
 };
 
 #endif
