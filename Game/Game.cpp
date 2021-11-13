@@ -1,10 +1,11 @@
 #include "Game.h"
+#include <cstdlib>
 
 // Deals with sprite rendering
 SpriteRenderer* Renderer;
 
 Game::Game(unsigned int width, unsigned int height)
-	: state(GameState::GAME_ACTIVE), keys(), mousePos(0.0f, 0.0f), width(width), height(height)
+	: state(GameState::GAME_ACTIVE), keys(), mousePos(0.0f, 0.0f), width(width), height(height), canUpdate(true)
 {
 
 }
@@ -57,7 +58,7 @@ void Game::LoadAllTextures()
 }
 
 // Called every frame first
-void Game::ProcessInput(float dt)
+void Game::ProcessGameState(float dt)
 {
 	// ESC to quit game
 	if (keys[GLFW_KEY_ESCAPE] == true) {
@@ -65,14 +66,70 @@ void Game::ProcessInput(float dt)
 		return;
 	}
 
+	// If on debug mode, can do one iteration by pressing MIDDLE MOUSE BUTTON
+	if (this->state == GameState::GAME_DEBUG) {
+		if (keys[GLFW_MOUSE_BUTTON_MIDDLE] == true) {
+			keys[GLFW_MOUSE_BUTTON_MIDDLE] = false;
+			canUpdate = true;
+			return;
+		}
+	}
+
+	// If the game is going on
 	if (this->state == GameState::GAME_ACTIVE) {
-		
+		// Check RIGHT MOUSE BUTTON for pausing
+		if (keys[GLFW_MOUSE_BUTTON_RIGHT] == true) {
+			keys[GLFW_MOUSE_BUTTON_RIGHT] = false;
+			std::cout << "GAME PAUSED" << std::endl;
+			state = GameState::GAME_PAUSE;
+			return;
+		}
+		// Check MIDDLE MOUSE BUTTON for entering debug mode
+		if (keys[GLFW_MOUSE_BUTTON_MIDDLE] == true) {
+			keys[GLFW_MOUSE_BUTTON_MIDDLE] = false;
+			std::cout << "GAME IN DEBUG MODE" << std::endl;
+			state = GameState::GAME_DEBUG;
+			return;
+		}
+
+		if (GameContext::gameOver == true) {
+			state = GameState::GAME_LOSE;
+		}
+	}
+
+	// Check RIGHT MOUSE BUTTON for unpausing or getting out of debug mode
+	if (this->state == GameState::GAME_PAUSE || this->state == GameState::GAME_DEBUG) {
+		if (keys[GLFW_MOUSE_BUTTON_RIGHT] == true) {
+			keys[GLFW_MOUSE_BUTTON_RIGHT] = false;
+			std::cout << "GAME RESUMED" << std::endl;
+			state = GameState::GAME_ACTIVE;
+			return;
+		}
 	}
 }
 
 // Called every frame second
 void Game::Update(float dt)
 {
+	if (state == GameState::GAME_LOSE) {
+		std::cout << "GAME OVERRRRR" << std::endl;
+		return; 
+	}
+
+	// If the game is paused
+	if (state == GameState::GAME_PAUSE) {
+		return;
+	}
+
+	if (state == GameState::GAME_DEBUG) {
+		if (canUpdate == false) {
+			return;
+		}
+		// If can update, show info on terminal and do one iteration
+		ShowGameInfo();
+		canUpdate = false;
+	}
+
 	AttributeManager::Update(dt, keys, mousePos);
 
 	// Checks and destroy gameObjects if needed
@@ -83,10 +140,12 @@ void Game::Update(float dt)
 			std::string name = it->second->GetFormattedName();
 			int eA = GameContext::CurrentAttributes.erase(name);
 			int eO = GameContext::CurrentObjects.erase(name);
+
+			/*
 			if (eA && eO)
 				std::cout << "DESTROYED: " << name << std::endl;
 			else if (eO)
-				std::cout << "DESTROYED OBJECT WITHOUT ATTRIBUTE: " << name << std::endl;
+				std::cout << "DESTROYED OBJECT WITHOUT ATTRIBUTE: " << name << std::endl;*/
 		}
 	}
 }
@@ -106,6 +165,38 @@ void Game::Render()
 			go.transform.rotation,
 			go.sprite.color);
 	} 
+}
+
+void Game::ShowGameInfo()
+{
+#ifdef _WIN32
+#define CLEAR "cls"
+#else
+#define CLEAR "clear"
+#endif
+	// Clears the terminal
+	system(CLEAR);
+
+	std::cout << "    GAME IN DEBUG MODE" << std::endl;
+
+	// Prints the Player at the top
+	GameObject playerGO = *GameContext::CurrentObjects["Player_0"];
+	std::cout << "----------------------------\n"
+		<< "GameObject: " << playerGO.GetFormattedName() << "\n"
+		<< "Position:   (" << playerGO.transform.position.x << ", " << playerGO.transform.position.y << ")" << std::endl;
+
+	// Prints anything else
+	for (auto iter : GameContext::CurrentObjects)
+	{
+		GameObject gameObject = *iter.second;
+
+		if (gameObject.GetName() == "EnemyV" ||
+			gameObject.GetName() == "Bullet") {
+			std::cout << "----------------------------\n"
+				<< "GameObject: " << gameObject.GetFormattedName() << "\n"
+				<< "Position:   (" << gameObject.transform.position.x << ", " << gameObject.transform.position.y << ")" << std::endl;
+		}
+	}
 }
 
 

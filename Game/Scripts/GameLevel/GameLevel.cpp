@@ -1,7 +1,11 @@
 #include "GameLevel.h"
 #include "../../Editor/GameEditor.h"
+#include "../../../Engine/GameObject/Attribute.h"
 
-GameLevel::GameLevel(std::shared_ptr<GameObject> go) : gameObject(go), enemies(), level(0)
+#include <random>
+#include <algorithm>
+
+GameLevel::GameLevel(std::shared_ptr<GameObject> go) : gameObject(go), enemies(), level(0), diverCountDown(0.0f), timeBetweenDivers(0.0f), amountOfDivers(0)
 {
 	Start();
 }
@@ -20,9 +24,30 @@ void GameLevel::Start()
 void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
 {  
     if (enemies.size() == 0) {
+        level++;
         std::string fileName = "Resources/Levels/level0" + std::to_string(level) + ".txt";
         Load(fileName);
     }
+
+    if (diverCountDown > 0) {
+        diverCountDown -= dt;
+    }
+    else {
+        // It's time for DIVERSS
+        amountOfDivers = rand() % 4; // range(0 to 3)
+        timeBetweenDivers = rand() % (100 / enemies.size()) + 0.5f; // range(0.5f to 7.5f)
+        std::cout << amountOfDivers << " enemies are diving." << std::endl;
+
+        for (int i = 0; i < amountOfDivers; i++)
+        {
+            GameContext::CurrentAttributes[enemies.back()]->enemyScript.Dive();
+            enemies.pop_back();
+            //GameContext::CurrentAttributes[enemies[i]]->enemyScript.SetSpeed(glm::vec2(60.0f, 150.0f));
+        }
+
+        diverCountDown = timeBetweenDivers;
+    }
+
 }
 
 void GameLevel::Load(std::string file)
@@ -34,7 +59,14 @@ void GameLevel::Load(std::string file)
 	std::string line;
 	std::ifstream fstream(file);
 	std::vector<std::vector<char>> enemyData;
+
+    float enemySpeed = 0.0f;
+
 	if (fstream) {
+        // First line is enemy speed
+        std::getline(fstream, line);
+        enemySpeed = std::stof(line);
+
 		while (std::getline(fstream, line)) {
 			std::istringstream sstream(line);
 			std::vector<char> row;
@@ -43,15 +75,16 @@ void GameLevel::Load(std::string file)
 			enemyData.push_back(row);
 		}
 		if (enemyData.size() > 0) {
-			GenerateLevel(enemyData);
+			GenerateLevel(enemyData, enemySpeed);
 		}
     }
     else {
         std::cout << "GAMELEVEL::Load: Arquivo não encontrado: " << file << std::endl;
+        level = 0;
     }
 }
 
-void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData)
+void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData, float enemySpeed)
 {
     // calculate dimensions
     unsigned int verticalCount = enemyData.size();
@@ -60,6 +93,7 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData)
     unsigned int lvlWidth = 500;
     unsigned int distanceBetween = 10;
     unsigned int topOffset = 20;
+    unsigned int lateralOffset = lvlWidth / 10;
 
     float unit_size = ((lvlWidth) / static_cast<float>(horizontalCount))-(distanceBetween);
 
@@ -72,15 +106,18 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData)
             if (enemyData[y][x] == 'V') // solid
             {
                 unsigned int yPos = (topOffset + y * (distanceBetween + unit_size));
-                unsigned int xPos = (50 + x * (distanceBetween + unit_size));
+                unsigned int xPos = (lateralOffset + x * (distanceBetween + unit_size));
 
                 glm::vec2 pos(xPos, yPos);
                 glm::vec2 size(unit_size, unit_size);
                 
                 std::string ID = GameEditor::CreateGameObject("EnemyV", pos, true, size);
+                // Turns collision ON
                 GameEditor::GameObjectSetSolid(ID, true);
+                // Set speed to level speed
+                GameContext::CurrentAttributes[ID]->enemyScript.SetYSpeed(enemySpeed);
                 
-                this->enemies.insert(ID);
+                this->enemies.push_back(ID);
             }
             else if (enemyData[y][x] > 1)
             {
@@ -107,7 +144,7 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData)
 }
 
 void GameLevel::EnemyDied(std::string name) {
-    enemies.erase(name);
+    enemies.erase(std::remove(enemies.begin(), enemies.end(), name), enemies.end());
 }
 
 

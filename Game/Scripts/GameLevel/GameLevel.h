@@ -10,10 +10,10 @@ class GameLevel : BaseBehaviour
 {
 public:
 	// Level State data
-	std::set<std::string> enemies;
+	std::vector<std::string> enemies;
 
 	// ------ CONSTRUCTORS ------
-	GameLevel() : gameObject(nullptr), enemies(), level(0) { };
+	GameLevel() : gameObject(nullptr), enemies(), level(0), diverCountDown(0.0f), timeBetweenDivers(0.0f), amountOfDivers(0) { };
 	GameLevel(std::shared_ptr<GameObject> go);
 	~GameLevel();
 
@@ -24,13 +24,17 @@ public:
 
 	void Load(std::string file);
 
-	void GenerateLevel(std::vector<std::vector<char>> enemyData);
+	void GenerateLevel(std::vector<std::vector<char>> enemyData, float enemySpeed);
 
 	void EnemyDied(std::string name);
 
 private:
 	std::shared_ptr<GameObject> gameObject;
 	int level;
+
+	float diverCountDown;
+	float timeBetweenDivers;
+	int amountOfDivers;
 };
 
 #endif

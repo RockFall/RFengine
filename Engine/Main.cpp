@@ -94,8 +94,8 @@ int main() {
 		lastFrame = currentFrame;
 		glfwPollEvents();
 
-		// Handles user input
-		Healthier.ProcessInput(deltaTime);
+		// Handles the state of the game
+		Healthier.ProcessGameState(deltaTime);
 
 		if (Healthier.state == GameState::GAME_CLOSE) {
 			glfwSetWindowShouldClose(window, true);
@@ -139,7 +139,7 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	if (action == GLFW_PRESS)
 		Healthier.keys[button] = true;
 	else if (action == GLFW_RELEASE)
 		Healthier.keys[button] = false;

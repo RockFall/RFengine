@@ -41,7 +41,9 @@ void Bullet::CheckOutScreen() {
 void Bullet::DoCollisions()
 {
 	for (auto enemyIt : GameContext::CurrentObjects) {
-		if (enemyIt.second->hasBeenDestroyed == false && enemyIt.second->GetName() == "EnemyV") {
+		if (enemyIt.second->hasBeenDestroyed == false 
+			&& enemyIt.second->GetName() == "EnemyV"
+			&& enemyIt.second->isSolid) {
 			if (CheckCollision(enemyIt.second, this->gameObject)) {
 				GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(enemyIt.second->GetFormattedName());
 				GameEditor::DestroyGameObject(enemyIt.second->GetFormattedName());

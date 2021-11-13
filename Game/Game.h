@@ -14,6 +14,7 @@
 enum class GameState {
     GAME_ACTIVE,
     GAME_PAUSE,
+    GAME_DEBUG,
     GAME_WIN,
     GAME_LOSE,
     GAME_CLOSE
@@ -40,8 +41,8 @@ public:
     // Loads all Textures defined
 	static void LoadAllTextures();
 
-    // Deals with input of the game
-    void ProcessInput(float dt);
+    // Deals with the game state
+    void ProcessGameState(float dt);
 
     // Update is called every frame
     // 'dt': the deltaTime between the last frame and current
@@ -49,6 +50,13 @@ public:
     // Called after Update
     // Do the rendering of current frame
     void Render();
+private:
+    // Tells the Update() method that, when in DEBUG MODE, wether
+    // we can do one iteration or not
+    bool canUpdate;
+
+    // Prints on the terminal info about every GameObject with meaning
+    void ShowGameInfo();
 };
 
 #endif

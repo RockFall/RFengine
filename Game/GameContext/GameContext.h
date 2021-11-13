@@ -14,6 +14,8 @@ public:
 	static std::map<std::string, std::shared_ptr<GameObject>> CurrentObjects;
 	static std::map<std::string, std::shared_ptr<Attribute>> CurrentAttributes;
 
+	static bool gameOver;
+
 private:
 	GameContext();
 };
