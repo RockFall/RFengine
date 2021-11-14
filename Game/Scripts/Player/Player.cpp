@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "../../Editor/GameEditor.h"
 
-Player::Player(std::shared_ptr<GameObject> go) :  gameObject(go), timeSinceLastShot(0.0f), shootingRate(0.0f), lives(0)
+Player::Player(GameObject* go) :  gameObject(go), timeSinceLastShot(0.0f), shootingRate(0.0f), lives(0)
 {
 	Start();
 }

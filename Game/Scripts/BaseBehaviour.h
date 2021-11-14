@@ -16,7 +16,7 @@ public:
 	// Called every frame
 	virtual void Update(float dt, bool keys[], glm::vec2 mousePos) = 0;
 private:
-	std::shared_ptr<GameObject> gameObject;
+	GameObject* gameObject;
 };
 
 

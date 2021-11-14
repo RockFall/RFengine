@@ -10,7 +10,10 @@ GameObject::GameObject()
 	this->transform.rotation = 0.0f;
 
 	this->sprite.color = glm::vec3(1.0f);
-	this->sprite.texture = Texture2D();
+	this->sprite.texture = Texture2D(); 
+GameObject::~GameObject()
+{
+	int a = 1;
 }
 
 

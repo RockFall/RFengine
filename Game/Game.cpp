@@ -138,8 +138,8 @@ void Game::Update(float dt)
 		++next_it;
 		if (it->second->hasBeenDestroyed) {
 			std::string name = it->second->GetFormattedName();
-			int eA = GameContext::CurrentAttributes.erase(name);
-			int eO = GameContext::CurrentObjects.erase(name);
+			size_t eA = GameContext::CurrentAttributes.erase(name);
+			size_t eO = GameContext::CurrentObjects.erase(name);
 
 			/*
 			if (eA && eO)
@@ -155,16 +155,16 @@ void Game::Render()
 {
 	// Do the rendering of all GameObjects on Scene 
 	// in their current location
-	for (auto iter : GameContext::CurrentObjects)
+	for (auto& iter : GameContext::CurrentObjects)
 	{
-		GameObject go = *iter.second;
+		GameObject& go = *iter.second;
 		Renderer->DrawSprite(
 			go.sprite.texture,
 			go.transform.position,
 			go.transform.size,
 			go.transform.rotation,
 			go.sprite.color);
-	} 
+	}
 }
 
 void Game::ShowGameInfo()
@@ -186,7 +186,7 @@ void Game::ShowGameInfo()
 		<< "Position:   (" << playerGO.transform.position.x << ", " << playerGO.transform.position.y << ")" << std::endl;
 
 	// Prints anything else
-	for (auto iter : GameContext::CurrentObjects)
+	for (auto& iter : GameContext::CurrentObjects)
 	{
 		GameObject gameObject = *iter.second;
 

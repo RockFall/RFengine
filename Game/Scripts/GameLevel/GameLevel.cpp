@@ -5,7 +5,7 @@
 #include <random>
 #include <algorithm>
 
-GameLevel::GameLevel(std::shared_ptr<GameObject> go) : gameObject(go), enemies(), level(0), diverCountDown(0.0f), timeBetweenDivers(0.0f), amountOfDivers(0)
+GameLevel::GameLevel(GameObject* go) : gameObject(go), enemies(), level(0), diverCountDown(0.0f), timeBetweenDivers(0.0f), amountOfDivers(0)
 {
 	Start();
 }
@@ -87,13 +87,13 @@ void GameLevel::Load(std::string file)
 void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData, float enemySpeed)
 {
     // calculate dimensions
-    unsigned int verticalCount = enemyData.size();
-    unsigned int horizontalCount = enemyData[0].size();
+    size_t verticalCount = enemyData.size();
+    size_t horizontalCount = enemyData[0].size();
 
-    unsigned int lvlWidth = 500;
-    unsigned int distanceBetween = 10;
-    unsigned int topOffset = 20;
-    unsigned int lateralOffset = lvlWidth / 10;
+    size_t lvlWidth = 500;
+    size_t distanceBetween = 10;
+    size_t topOffset = 20;
+    size_t lateralOffset = lvlWidth / 10;
 
     float unit_size = ((lvlWidth) / static_cast<float>(horizontalCount))-(distanceBetween);
 

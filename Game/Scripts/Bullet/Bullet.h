@@ -11,7 +11,7 @@ class Bullet : BaseBehaviour
 public:
 	// ------ CONSTRUCTOR ------
 	Bullet() : speed(0.0f), gameObject(nullptr) { }
-	Bullet(std::shared_ptr<GameObject> go);
+	Bullet(GameObject* go);
 	~Bullet();
 
 	// Called first and once
@@ -27,11 +27,11 @@ public:
 
 	void DoCollisions();
 
-	bool CheckCollision(std::shared_ptr<GameObject> one, std::shared_ptr<GameObject> two);
+	bool CheckCollision(GameObject* one, GameObject* two);
 
 private:
 	// Player GameObject
-	std::shared_ptr<GameObject> gameObject;
+	GameObject* gameObject;
 
 	float speed;
 };

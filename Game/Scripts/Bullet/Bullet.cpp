@@ -3,7 +3,7 @@
 #include "../GameLevel/GameLevel.h"
 #include "../../../Engine/GameObject/Attribute.h";
 
-Bullet::Bullet(std::shared_ptr<GameObject> go) :  gameObject(go), speed(0.0f)
+Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f)
 {
 	Start();
 }
@@ -40,11 +40,11 @@ void Bullet::CheckOutScreen() {
 
 void Bullet::DoCollisions()
 {
-	for (auto enemyIt : GameContext::CurrentObjects) {
+	for (auto& enemyIt : GameContext::CurrentObjects) {
 		if (enemyIt.second->hasBeenDestroyed == false 
 			&& enemyIt.second->GetName() == "EnemyV"
 			&& enemyIt.second->isSolid) {
-			if (CheckCollision(enemyIt.second, this->gameObject)) {
+			if (CheckCollision(enemyIt.second.get(), this->gameObject)) {
 				GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(enemyIt.second->GetFormattedName());
 				GameEditor::DestroyGameObject(enemyIt.second->GetFormattedName());
 				GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
@@ -54,7 +54,7 @@ void Bullet::DoCollisions()
 	}
 }
 
-bool Bullet::CheckCollision(std::shared_ptr<GameObject> one, std::shared_ptr<GameObject> two)
+bool Bullet::CheckCollision(GameObject* one, GameObject* two)
 {
 	// collision x-axis?
 	bool collisionX = one->transform.position.x + one->transform.size.x >= two->transform.position.x &&

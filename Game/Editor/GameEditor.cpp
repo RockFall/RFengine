@@ -40,8 +40,10 @@ std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool h
 	if (hasSprite == false)
 		texName = "None";
 
-	GameContext::CurrentObjects[formatedName] = std::make_shared<GameObject>
+	std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>
 		(name, count, pos, size, ResourceManager::GetTexture(texName));
+
+	GameContext::CurrentObjects.emplace(formatedName, std::move(gameObject));
 
 	// Calls creation of Attribute for the GameObject 'formatedName' and type 'name'
 	std::string type = name;

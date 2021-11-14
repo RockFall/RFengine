@@ -14,7 +14,7 @@ public:
 
 	// ------ CONSTRUCTORS ------
 	GameLevel() : gameObject(nullptr), enemies(), level(0), diverCountDown(0.0f), timeBetweenDivers(0.0f), amountOfDivers(0) { };
-	GameLevel(std::shared_ptr<GameObject> go);
+	GameLevel(GameObject* go);
 	~GameLevel();
 
 	// Called first and once
@@ -29,7 +29,7 @@ public:
 	void EnemyDied(std::string name);
 
 private:
-	std::shared_ptr<GameObject> gameObject;
+	GameObject* gameObject;
 	int level;
 
 	float diverCountDown;

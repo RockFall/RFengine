@@ -5,14 +5,14 @@
 #include <string>
 #include <memory>
 
-class Attribute;
-class GameObject;
+#include "../../Engine/GameObject/GameObject.h"
+#include "../../Engine/GameObject/Attribute.h"
 
 class GameContext
 {
 public:
-	static std::map<std::string, std::shared_ptr<GameObject>> CurrentObjects;
-	static std::map<std::string, std::shared_ptr<Attribute>> CurrentAttributes;
+	static std::map<std::string, std::unique_ptr<GameObject>> CurrentObjects;
+	static std::map<std::string, std::unique_ptr<Attribute>> CurrentAttributes;
 
 	static bool gameOver;
 

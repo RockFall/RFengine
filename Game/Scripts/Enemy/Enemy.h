@@ -10,8 +10,8 @@ class Enemy : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Enemy() : movementRange(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr) { }
-	Enemy(std::shared_ptr<GameObject> go);
+	Enemy() : movementRange(0), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr) { }
+	Enemy(GameObject* go);
 	~Enemy();
 
 	// Called first and once
@@ -31,7 +31,7 @@ public:
 
 private:
 	// Player GameObject
-	std::shared_ptr<GameObject> gameObject;
+	GameObject* gameObject;
 
 	// Speed related
 	glm::vec2 speed;

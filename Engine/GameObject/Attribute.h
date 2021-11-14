@@ -10,7 +10,7 @@ class GameObject;
 
 class Attribute {
 public:
-	std::shared_ptr<GameObject> gameObject;
+	GameObject* gameObject;
 
 	std::string type;
 
@@ -23,7 +23,7 @@ public:
 
 	Attribute(const Attribute& a) : gameObject(a.gameObject), playerScript(a.playerScript) { }
 
-	Attribute(std::shared_ptr<GameObject> go, std::string type);
+	Attribute(GameObject* go, std::string type);
 
 	~Attribute();
 
