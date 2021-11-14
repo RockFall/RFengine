@@ -27,7 +27,7 @@ void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 	// ------------------------------------------------------------
 }
 
-std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size, bool hasScript) {
+std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size, bool hasScript, std::string texName) {
 	int count = 0;
 	// While _0 _1 _2 ... exists, keeps counting
 	// ultil findind an 'name_N' that doesn't exists
@@ -36,9 +36,11 @@ std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool h
 	}
 	std::string formatedName = name + "_" + std::to_string(count);
 
-	std::string texName = name;
 	if (hasSprite == false)
 		texName = "None";
+	else if (texName == "default")
+		texName = name;
+
 
 	std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>
 		(name, count, pos, size, ResourceManager::GetTexture(texName));

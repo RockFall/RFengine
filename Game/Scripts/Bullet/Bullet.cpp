@@ -3,7 +3,7 @@
 #include "../GameLevel/GameLevel.h"
 #include "../../../Engine/GameObject/Attribute.h";
 
-Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f)
+Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f), targetName()
 {
 	Start();
 }
@@ -14,7 +14,7 @@ Bullet::~Bullet()
 
 void Bullet::Start()
 {
-	speed = 400.0f;
+	targetName = "EnemyV";
 }
 
 void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
@@ -28,7 +28,12 @@ void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
 
 void Bullet::DoMovement(float dt)
 {
-	gameObject->transform.position.y -= speed * dt;
+	gameObject->transform.position += speed * dt;
+}
+
+void Bullet::setSpeed(glm::vec2 speed)
+{
+	this->speed = speed;
 }
 
 void Bullet::CheckOutScreen() {
@@ -42,7 +47,7 @@ void Bullet::DoCollisions()
 {
 	for (auto& enemyIt : GameContext::CurrentObjects) {
 		if (enemyIt.second->hasBeenDestroyed == false 
-			&& enemyIt.second->GetName() == "EnemyV"
+			&& enemyIt.second->GetName() == targetName
 			&& enemyIt.second->isSolid) {
 			if (CheckCollision(enemyIt.second.get(), this->gameObject)) {
 				GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(enemyIt.second->GetFormattedName());

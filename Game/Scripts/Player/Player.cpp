@@ -39,8 +39,11 @@ void Player::Shoot(bool clicking, float dt) {
 			"Bullet",
 			gameObject->transform.position + glm::vec2(0.0f, -50.0f),
 			true,
-			glm::vec2(bulletSize, bulletSize)
+			glm::vec2(bulletSize, bulletSize),
+			true,
+			"Anticorpo"
 		);
 		GameEditor::GameObjectSetSolid(bulletID, true);
+		GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(glm::vec2(0.0f, -400.0f));
 	}
 }

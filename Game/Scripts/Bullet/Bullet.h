@@ -1,5 +1,5 @@
-#ifndef BULLET_H
-#define BULLET_H
+#ifndef PLAYER_BULLET_H
+#define PLAYER_BULLET_H
 
 #include "../BaseBehaviour.h"
 
@@ -10,7 +10,7 @@ class Bullet : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Bullet() : speed(0.0f), gameObject(nullptr) { }
+	Bullet() : speed(0), targetName(), gameObject(nullptr) { }
 	Bullet(GameObject* go);
 	~Bullet();
 
@@ -21,6 +21,8 @@ public:
 
 	// Makes the bullet GameObject move in the Y-axis
 	void DoMovement(float dt);
+
+	void setSpeed(glm::vec2 speed);
 
 	// Checks if the bullet is out of the screen, is so, destroys it
 	void CheckOutScreen();
@@ -33,7 +35,9 @@ private:
 	// Player GameObject
 	GameObject* gameObject;
 
-	float speed;
+	glm::vec2 speed;
+
+	std::string targetName;
 };
 
 #endif

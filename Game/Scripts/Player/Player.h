@@ -34,7 +34,6 @@ private:
 	// Shooting variables
 	float timeSinceLastShot;
 	float shootingRate; // in bullets/second
-
 	int bulletSize;
 };
 

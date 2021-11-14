@@ -51,7 +51,7 @@ void Game::Init()
 void Game::LoadAllTextures()
 {
 	ResourceManager::LoadTexture("Resources/Linfocito_B.png", true, "Player");
-	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Bullet");
+	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Anticorpo");
 	ResourceManager::LoadTexture("Resources/Virus.png", true, "EnemyV");
 	ResourceManager::LoadTexture("Resources/None.png", true, "None");
 	ResourceManager::LoadTexture("Resources/Background.png", true, "Background");

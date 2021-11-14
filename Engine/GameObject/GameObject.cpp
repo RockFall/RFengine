@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	: isSolid(false), hasBeenDestroyed(false) { 
+	: isSolid(false), hasBeenDestroyed(false) {
 	this->name = "";
 	this->id = 0;
 	this->transform.position = glm::vec2(0.0f, 0.0f);
@@ -10,7 +10,8 @@ GameObject::GameObject()
 	this->transform.rotation = 0.0f;
 
 	this->sprite.color = glm::vec3(1.0f);
-	this->sprite.texture = Texture2D(); 
+	this->sprite.texture = Texture2D();
+}
 GameObject::~GameObject()
 {
 	int a = 1;
