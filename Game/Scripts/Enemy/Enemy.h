@@ -10,7 +10,7 @@ class Enemy : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Enemy() : movementRange(0.0f), xTargetPos(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr), timeSinceLastShot(0), shootingRate(0), bulletSize(0)  { }
+	Enemy() : movementRange(0.0f), xTargetPos(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr), timeSinceLastShot(0), shootingRate(0), bulletSize(0), health(0)  { }
 	Enemy(GameObject* go);
 	~Enemy();
 
@@ -30,12 +30,17 @@ public:
 	void Dive();
 	void Shoot(float dt);
 
+	void Hit(int damage);
+
 private:
 	// Player GameObject
 	GameObject* gameObject;
 
 	// Speed related
 	glm::vec2 speed;
+
+	// Life variables
+	int health;
 
 	// Movement position
 	glm::vec2 originalPos;
@@ -49,7 +54,7 @@ private:
 	// Shooting variables
 	float timeSinceLastShot;
 	float shootingRate; // in bullets/second
-	int bulletSize;
+	glm::vec2 bulletSize;
 
 };
 

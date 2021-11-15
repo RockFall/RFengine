@@ -5,7 +5,8 @@ void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 {
 	// --------- BACKGROUND -------------
 	
-	CreateGameObject("Background", glm::vec2(0.0f), true, glm::vec2(600.0f, 700.0f), false);
+	CreateGameObject("Background", glm::vec2(0.0f), true, glm::vec2(600.0f, 2100.0f));
+	CreateGameObject("Background", glm::vec2(0.0f, 2100.0f), true, glm::vec2(600.0f, 2100.0f));
 
 	// ---- Creating Player ----
 
@@ -19,6 +20,8 @@ void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 	);
 
 	CreateGameObject("Player", playerPos);
+	GameContext::CurrentObjects["Player_0"]->SetTag("Player");
+	GameContext::CurrentObjects["Player_0"]->isSolid = true;
 
 	// ----------------- GAMELEVEL GAME OBJECT -----------------
 
@@ -41,20 +44,13 @@ std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool h
 	else if (texName == "default")
 		texName = name;
 
-
 	std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>
 		(name, count, pos, size, ResourceManager::GetTexture(texName));
 
 	GameContext::CurrentObjects.emplace(formatedName, std::move(gameObject));
 
-	// Calls creation of Attribute for the GameObject 'formatedName' and type 'name'
-	std::string type = name;
-	if (name == "EnemyV") {
-		type = "Enemy";
-	}
-
 	if (hasScript)
-		AttributeManager::AddGameObjectAttribute(formatedName, type);
+		AttributeManager::AddGameObjectAttribute(formatedName, name);
 
 	return formatedName;
 }

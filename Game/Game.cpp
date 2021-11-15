@@ -52,9 +52,16 @@ void Game::LoadAllTextures()
 {
 	ResourceManager::LoadTexture("Resources/Linfocito_B.png", true, "Player");
 	ResourceManager::LoadTexture("Resources/Anticorpo.png", true, "Anticorpo");
-	ResourceManager::LoadTexture("Resources/Virus.png", true, "EnemyV");
+
+	ResourceManager::LoadTexture("Resources/VirusEsfera.png", true, "VirusEsfera");
+	ResourceManager::LoadTexture("Resources/VirusPoliedro.png", true, "VirusPoliedro");
+	ResourceManager::LoadTexture("Resources/VirusComplexo.png", true, "VirusComplexo");
+	ResourceManager::LoadTexture("Resources/Bacteria.png", true, "Bacteria");
+	ResourceManager::LoadTexture("Resources/RNA.png", true, "RNA");
+
 	ResourceManager::LoadTexture("Resources/None.png", true, "None");
-	ResourceManager::LoadTexture("Resources/Background.png", true, "Background");
+	ResourceManager::LoadTexture("Resources/BackgroundBig.png", true, "Background");
+
 }
 
 // Called every frame first

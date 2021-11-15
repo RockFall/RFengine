@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Scripts\Background\Background.cpp" />
     <ClCompile Include="Game\Scripts\GameLevel\GameLevel.cpp" />
     <ClCompile Include="Game\Scripts\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\GameContext\GameContext.cpp" />
@@ -179,6 +180,7 @@
     <None Include="Engine\Shaders\sprite.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Scripts\Background\Background.h" />
     <ClInclude Include="Game\Scripts\BaseBehaviour.h" />
     <ClInclude Include="Game\Scripts\GameLevel\GameLevel.h" />
     <ClInclude Include="Game\Scripts\Enemy\Enemy.h" />
@@ -205,7 +207,7 @@
     <Image Include="Resources\drama.png" />
     <Image Include="Resources\Linfocito_B.png" />
     <Image Include="Resources\None.png" />
-    <Image Include="Resources\Virus.png" />
+    <Image Include="Resources\VirusEsfera.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Levels\level01.txt" />

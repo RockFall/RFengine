@@ -3,7 +3,7 @@
 #include "../GameLevel/GameLevel.h"
 #include "../../../Engine/GameObject/Attribute.h";
 
-Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f), targetName()
+Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f), targetName(), damage(0)
 {
 	Start();
 }
@@ -14,7 +14,8 @@ Bullet::~Bullet()
 
 void Bullet::Start()
 {
-	targetName = "EnemyV";
+	targetName = "Enemy";
+	damage = 1;
 }
 
 void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
@@ -36,6 +37,11 @@ void Bullet::setSpeed(glm::vec2 speed)
 	this->speed = speed;
 }
 
+void Bullet::setTarget(std::string name)
+{
+	this->targetName = name;
+}
+
 void Bullet::CheckOutScreen() {
 	if (gameObject->transform.position.y < -gameObject->transform.size.y)
 	{
@@ -45,14 +51,19 @@ void Bullet::CheckOutScreen() {
 
 void Bullet::DoCollisions()
 {
-	for (auto& enemyIt : GameContext::CurrentObjects) {
-		if (enemyIt.second->hasBeenDestroyed == false 
-			&& enemyIt.second->GetName() == targetName
-			&& enemyIt.second->isSolid) {
-			if (CheckCollision(enemyIt.second.get(), this->gameObject)) {
-				GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(enemyIt.second->GetFormattedName());
-				GameEditor::DestroyGameObject(enemyIt.second->GetFormattedName());
-				GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
+	for (auto& targetIt : GameContext::CurrentObjects) {
+		if (targetIt.second->hasBeenDestroyed == false 
+			&& targetIt.second->GetTag() == targetName
+			&& targetIt.second->isSolid) {
+			if (CheckCollision(targetIt.second.get(), this->gameObject)) {
+				if (targetIt.second->GetTag() == "Enemy") {
+					GameContext::CurrentAttributes[targetIt.second->GetFormattedName()]->enemyScript.Hit(damage);
+					GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
+				}
+				else if (targetIt.second->GetTag() == "Player") {
+					GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
+					std::cout << "Player acertado! -1 vida" << std::endl;
+				}
 				return;
 			}
 		}

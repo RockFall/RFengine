@@ -3,6 +3,7 @@
 GameObject::GameObject()
 	: isSolid(false), hasBeenDestroyed(false) {
 	this->name = "";
+	this->tag = "";
 	this->id = 0;
 	this->transform.position = glm::vec2(0.0f, 0.0f);
 	this->transform.size = glm::vec2(1.0f, 1.0f);
@@ -14,12 +15,11 @@ GameObject::GameObject()
 }
 GameObject::~GameObject()
 {
-	int a = 1;
 }
 
 
 GameObject::GameObject(std::string name, int id, glm::vec2 pos, glm::vec2 size, Texture2D texture, glm::vec3 color, glm::vec2 velocity)
-	: isSolid(false), hasBeenDestroyed(false) {
+	: isSolid(false), hasBeenDestroyed(false), tag() {
 	this->name = name;
 	this->id = id;
 	this->transform.position = pos;
@@ -42,6 +42,16 @@ int GameObject::GetID()
 
 std::string GameObject::GetFormattedName() {
 	return (this->name + "_" + std::to_string(this->id));
+}
+
+std::string GameObject::GetTag()
+{
+	return this->tag;
+}
+
+void GameObject::SetTag(std::string tagName)
+{
+	this->tag = tagName;
 }
 
 std::string GameObject::FormattedName(std::string name, int id)

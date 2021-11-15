@@ -10,7 +10,7 @@ class Bullet : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Bullet() : speed(0), targetName(), gameObject(nullptr) { }
+	Bullet() : speed(0), targetName(), damage(0), gameObject(nullptr) { }
 	Bullet(GameObject* go);
 	~Bullet();
 
@@ -23,6 +23,7 @@ public:
 	void DoMovement(float dt);
 
 	void setSpeed(glm::vec2 speed);
+	void setTarget(std::string name);
 
 	// Checks if the bullet is out of the screen, is so, destroys it
 	void CheckOutScreen();
@@ -36,6 +37,8 @@ private:
 	GameObject* gameObject;
 
 	glm::vec2 speed;
+
+	int damage;
 
 	std::string targetName;
 };

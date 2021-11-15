@@ -18,15 +18,16 @@ void Enemy::Start()
 	movementRange = 40.0f;
 	originalPos = gameObject->transform.position;
 
-	shootingRate = 1.5f;
-	bulletSize = 75;
+	shootingRate = 0.75f;
+	bulletSize = gameObject->transform.size/2.0f;
+
+	health = ceil(gameObject->transform.size.x / 50.0f);
 }
 
 void Enemy::Update(float dt, bool keys[], glm::vec2 mousePos)
 {
-	if (diving && gameObject->transform.position.y <= 520) {
-		//Shoot(dt);
-		//return;
+	if (diving && gameObject->transform.position.y <= 520 && gameObject->transform.position.y > originalPos.y + 200.0f) {
+		Shoot(dt);
 	}
 
 	if (gameObject->transform.position.y >= 700 && diving == false) {
@@ -84,15 +85,28 @@ void Enemy::Shoot(float dt)
 	timeSinceLastShot = 1 / shootingRate;
 	std::string bulletID = GameEditor::CreateGameObject(
 		"Bullet",
-		gameObject->transform.position - (gameObject->transform.size + glm::vec2(0.0f, 50.0f)),
+		gameObject->transform.position - (gameObject->transform.size + glm::vec2(0.0f, -50.0f)),
 		true,
-		glm::vec2(bulletSize, bulletSize),
+		bulletSize,
 		true,
-		"Anticorpo"
+		"RNA"
 	);
 
 	//GameContext::CurrentObjects["Player"]->transform.position.x - gameObject->transform.position.x
-	//GameEditor::GameObjectSetSolid(bulletID, true);
-	glm::vec2 bulletDirection = glm::vec2(0.0f, 0.0f);
-	GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(bulletDirection);
+
+	glm::vec2 playerSize = GameContext::CurrentObjects["Player_0"]->transform.size;
+	glm::vec2 playerPos = GameContext::CurrentObjects["Player_0"]->transform.position + playerSize/2.0f;
+	glm::vec2 bulletDirection = glm::normalize(playerPos - gameObject->transform.position);
+
+	GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(bulletDirection * 400.0f);
+	GameContext::CurrentAttributes[bulletID]->bulletScript.setTarget("Player");
+	GameEditor::GameObjectSetSolid(bulletID, true);
+}
+
+void Enemy::Hit(int damage) {
+	this->health -= damage;
+	if (health <= 0) {
+		GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(gameObject->GetFormattedName());
+		GameEditor::DestroyGameObject(gameObject->GetFormattedName());
+	}
 }

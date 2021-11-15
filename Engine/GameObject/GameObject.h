@@ -39,12 +39,17 @@ public:
 	std::string GetName();
 	int GetID();
 	std::string GetFormattedName();
+	std::string GetTag();
+
+	// ---- Setters ----
+	void SetTag(std::string tagName);
 
 	// Unites name and id into name_id
 	static std::string FormattedName(std::string name, int id);
 
 private:
 	std::string name;
+	std::string tag;
 	int id;
 };
 

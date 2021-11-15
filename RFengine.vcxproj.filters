@@ -84,6 +84,9 @@
     <ClCompile Include="Game\Scripts\GameLevel\GameLevel.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Scripts\Background\Background.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\sprite.vs">
@@ -151,6 +154,9 @@
     <ClInclude Include="Game\Scripts\BaseBehaviour.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Scripts\Background\Background.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png">
@@ -168,7 +174,7 @@
     <Image Include="Resources\None.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
-    <Image Include="Resources\Virus.png">
+    <Image Include="Resources\VirusEsfera.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

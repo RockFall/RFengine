@@ -27,6 +27,7 @@ void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
         level++;
         std::string fileName = "Resources/Levels/level0" + std::to_string(level) + ".txt";
         Load(fileName);
+        return;
     }
 
     if (diverCountDown > 0) {
@@ -34,9 +35,14 @@ void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
     }
     else {
         // It's time for DIVERSS
-        amountOfDivers = rand() % 4; // range(0 to 3)
-        timeBetweenDivers = rand() % (100 / enemies.size()) + 0.5f; // range(0.5f to 7.5f)
-        std::cout << amountOfDivers << " enemies are diving." << std::endl;
+        amountOfDivers = rand() % 3; // range(0 to 3)
+        timeBetweenDivers = rand() % (50 / enemies.size()) + 0.5f; // range(0.5f to 7.5f)
+
+        if (amountOfDivers > enemies.size())
+            amountOfDivers = 1;
+        if (timeBetweenDivers >= 7.0f)
+            timeBetweenDivers = 7.0f;
+        std::cout << amountOfDivers << " enemies are diving. Next wave in " << timeBetweenDivers << " seconds." << std::endl;
 
         for (int i = 0; i < amountOfDivers; i++)
         {
@@ -103,20 +109,44 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData, float en
         for (unsigned int x = 0; x < horizontalCount; ++x)
         {
             // check block type from level data (2D level array)
-            if (enemyData[y][x] == 'V') // solid
+            if (enemyData[y][x] != 'N') // solid
             {
+                std::string texName = "default";
+                int randTex = 0;
+
+                switch (enemyData[y][x])
+                {
+                case 'V':
+                    randTex = rand() % 3;
+                    if (randTex == 0)
+                        texName = "VirusEsfera";
+                    if (randTex == 1)
+                        texName = "VirusPoliedro";
+                    if (randTex == 2)
+                        texName = "VirusComplexo";
+                    break;
+                case 'B':
+                    texName = "Bacteria";
+                    break;
+                default:
+                    break;
+                }
+
                 unsigned int yPos = (topOffset + y * (distanceBetween + unit_size));
                 unsigned int xPos = (lateralOffset + x * (distanceBetween + unit_size));
 
                 glm::vec2 pos(xPos, yPos);
                 glm::vec2 size(unit_size, unit_size);
                 
-                std::string ID = GameEditor::CreateGameObject("EnemyV", pos, true, size);
+                std::string ID = GameEditor::CreateGameObject("Enemy", pos, true, size, true, texName);
                 // Turns collision ON
                 GameEditor::GameObjectSetSolid(ID, true);
+                // Set GameObject's tag
+                GameContext::CurrentObjects[ID]->SetTag("Enemy");
                 // Set speed to level speed
                 GameContext::CurrentAttributes[ID]->enemyScript.SetYSpeed(enemySpeed);
                 
+
                 this->enemies.push_back(ID);
             }
             else if (enemyData[y][x] > 1)

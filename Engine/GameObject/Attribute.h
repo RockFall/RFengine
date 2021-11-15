@@ -5,6 +5,7 @@
 #include "../../Game/Scripts/Bullet/Bullet.h"
 #include "../../Game/Scripts/GameLevel/GameLevel.h"
 #include "../../Game/Scripts/Enemy/Enemy.h"
+#include "../../Game/Scripts/Background/Background.h"
 
 class GameObject;
 
@@ -18,6 +19,7 @@ public:
 	Enemy enemyScript;
 	Bullet bulletScript;
 	GameLevel gameLevelScript;
+	Background backgroundScript;
 
 	Attribute() : gameObject(nullptr), playerScript(nullptr) { }
 
