@@ -8,6 +8,16 @@ void GameEditor::LoadInitialScene(unsigned int width, unsigned int height)
 	CreateGameObject("Background", glm::vec2(0.0f), true, glm::vec2(600.0f, 2100.0f));
 	CreateGameObject("Background", glm::vec2(0.0f, 2100.0f), true, glm::vec2(600.0f, 2100.0f));
 
+	std::string ID = CreateGameObject("Background", glm::vec2(0.0f), true, glm::vec2(600.0f, 2100.0f), true, "Fights01");
+	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(35.0f);
+	ID = CreateGameObject("Background", glm::vec2(0.0f, 2100.0f), true, glm::vec2(600.0f, 2100.0f), true, "Fights02");
+	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(35.0f);
+
+	ID = CreateGameObject("Background", glm::vec2(0.0f, 0.0f), true, glm::vec2(600.0f, 2100.0f), true, "BackgroundHemacias");
+	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(60.0f);
+	ID = CreateGameObject("Background", glm::vec2(0.0f, 2100.0f), true, glm::vec2(600.0f, 2100.0f), true, "BackgroundHemacias");
+	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(60.0f);
+
 	// ---- Creating Player ----
 
 	// Initial size of the player paddle

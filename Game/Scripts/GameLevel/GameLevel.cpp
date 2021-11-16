@@ -101,7 +101,7 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData, float en
     size_t topOffset = 20;
     size_t lateralOffset = lvlWidth / 10;
 
-    float unit_size = ((lvlWidth) / static_cast<float>(horizontalCount))-(distanceBetween);
+    float unit_size = std::min(((lvlWidth) / static_cast<float>(horizontalCount))-(distanceBetween), 400.0f);
 
     // initialize level tiles based on tileData		
     for (unsigned int y = 0; y < verticalCount; ++y)

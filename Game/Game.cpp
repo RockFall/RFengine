@@ -61,6 +61,9 @@ void Game::LoadAllTextures()
 
 	ResourceManager::LoadTexture("Resources/None.png", true, "None");
 	ResourceManager::LoadTexture("Resources/BackgroundBig.png", true, "Background");
+	ResourceManager::LoadTexture("Resources/BackgroundHemacias.png", true, "BackgroundHemacias");
+	ResourceManager::LoadTexture("Resources/Fights01.png", true, "Fights01");
+	ResourceManager::LoadTexture("Resources/Fights02.png", true, "Fights02");
 
 }
 
