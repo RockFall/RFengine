@@ -10,7 +10,7 @@ class Player : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Player() : timeSinceLastShot(0.0f), shootingRate(0.0f), bulletSize(0), lives(0), gameObject(nullptr) { }
+	Player() : timeSinceLastShot(0.0f), shootingRate(0.0f), bulletSize(0), lives(0), speed(0), gameObject(nullptr) { }
 	Player(GameObject* go);
 	~Player();
 
@@ -30,6 +30,7 @@ private:
 	GameObject* gameObject;
 
 	int lives;
+	float speed;
 
 	// Shooting variables
 	float timeSinceLastShot;

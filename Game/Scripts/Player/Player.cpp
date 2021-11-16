@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "../../Editor/GameEditor.h"
 
-Player::Player(GameObject* go) :  gameObject(go), timeSinceLastShot(0.0f), shootingRate(0.0f), lives(0)
+Player::Player(GameObject* go) :  gameObject(go), timeSinceLastShot(0.0f), shootingRate(0.0f), lives(0), speed(0)
 {
 	Start();
 }
@@ -14,6 +14,7 @@ void Player::Start()
 {
 	shootingRate = 10.0f;
 	bulletSize = 75;
+	speed = 60.0f;
 }
 
 void Player::Update(float dt, bool keys[], glm::vec2 mousePos)
@@ -24,7 +25,15 @@ void Player::Update(float dt, bool keys[], glm::vec2 mousePos)
 
 void Player::DoMovement(float dt, bool keys[], glm::vec2 mousePos)
 {
-	gameObject->transform.position.x = mousePos.x - (gameObject->transform.size.x / 2.0f);
+	float target = mousePos.x - (gameObject->transform.size.x / 2.0f);
+	gameObject->transform.position.x += (target - gameObject->transform.position.x) * speed * dt;
+
+	if (gameObject->transform.position.x >= GameEditor::GAME_WIDTH - gameObject->transform.size.x) {
+		gameObject->transform.position.x = GameEditor::GAME_WIDTH - gameObject->transform.size.x;
+	}
+	else if (gameObject->transform.position.x <= 0) {
+		gameObject->transform.position.x = 0;
+	}
 }
 
 void Player::Shoot(bool clicking, float dt) {
@@ -44,6 +53,6 @@ void Player::Shoot(bool clicking, float dt) {
 			"Anticorpo"
 		);
 		GameEditor::GameObjectSetSolid(bulletID, true);
-		GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(glm::vec2(0.0f, -400.0f));
+		GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(glm::vec2(0.0f, -1000.0f));
 	}
 }

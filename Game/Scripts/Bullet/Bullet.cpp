@@ -1,7 +1,8 @@
 #include "Bullet.h"
 #include "../../Editor/GameEditor.h"
 #include "../GameLevel/GameLevel.h"
-#include "../../../Engine/GameObject/Attribute.h";
+#include "../../../Engine/GameObject/Attribute.h"
+#include "../../../Engine/GameObject/Attribute.h"
 
 Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f), targetName(), damage(0)
 {

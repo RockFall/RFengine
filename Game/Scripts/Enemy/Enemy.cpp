@@ -3,7 +3,7 @@
 
 #include <random>
 
-Enemy::Enemy(GameObject* go) : gameObject(go), speed(0.0f), movementRange(0.0f), xTargetPos(0.0f), originalPos(0.0f), diving(false), initialMove(false), timeSinceLastShot(0), shootingRate(0), bulletSize(0)
+Enemy::Enemy(GameObject* go) : gameObject(go), speed(0.0f), movementRange(0.0f), xTargetPos(0.0f), originalPos(0.0f), diving(false), initialMove(false), timeSinceLastShot(0.0f), shootingRate(0), bulletSize(0)
 {
 	Start();
 }
@@ -30,7 +30,7 @@ void Enemy::Update(float dt, bool keys[], glm::vec2 mousePos)
 		Shoot(dt);
 	}
 
-	if (gameObject->transform.position.y >= 700 && diving == false) {
+	if (gameObject->transform.position.y >= GameEditor::GAME_HEIGHT && diving == false) {
 		GameContext::gameOver = true;
 		GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
 	}
@@ -73,6 +73,9 @@ void Enemy::Dive()
 {
 	SetSpeed(glm::vec2(60.0f, 150.0f));
 	this->diving = true;
+	// random initial shooting time
+	timeSinceLastShot = (rand() % 60) / 60.0f;
+	std::cout << "Shoting in " << timeSinceLastShot << std::endl;
 }
 
 void Enemy::Shoot(float dt)
@@ -83,9 +86,10 @@ void Enemy::Shoot(float dt)
 	}
 
 	timeSinceLastShot = 1 / shootingRate;
+
 	std::string bulletID = GameEditor::CreateGameObject(
 		"Bullet",
-		gameObject->transform.position - (gameObject->transform.size + glm::vec2(0.0f, -50.0f)),
+		(gameObject->transform.position + (gameObject->transform.size / 2.0f)),
 		true,
 		bulletSize,
 		true,

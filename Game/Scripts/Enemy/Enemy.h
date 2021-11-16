@@ -10,7 +10,7 @@ class Enemy : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Enemy() : movementRange(0.0f), xTargetPos(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr), timeSinceLastShot(0), shootingRate(0), bulletSize(0), health(0)  { }
+	Enemy() : movementRange(0.0f), xTargetPos(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr), timeSinceLastShot(0.0f), shootingRate(0), bulletSize(0), health(0)  { }
 	Enemy(GameObject* go);
 	~Enemy();
 
@@ -45,7 +45,7 @@ private:
 	// Movement position
 	glm::vec2 originalPos;
 	float xTargetPos;
-	unsigned int movementRange;
+	float movementRange;
 
 	// Different behaviours
 	bool diving;

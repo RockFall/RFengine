@@ -25,7 +25,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 const unsigned int SCREEN_WIDTH = 600;
 const unsigned int SCREEN_HEIGHT = 700;
 
-Game Healthier(SCREEN_WIDTH, SCREEN_HEIGHT);
+Game Healthier = Game();
 
 int main() {
 	// -------------------- GLFW CONFIG --------------------
@@ -39,11 +39,19 @@ int main() {
 	// Using CORE
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// Disable resizing
-	glfwWindowHint(GLFW_RESIZABLE, false);
+	//glfwWindowHint(GLFW_RESIZABLE, false);
 	
 
-	// Creating the main Window
-	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Healthier", NULL, NULL);
+	// Making it full screen (windowed full screen)
+	GLFWmonitor* primary = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(primary);
+
+	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Healthier", primary, NULL);
 	// Error check
 	if (window == NULL) {
 		std::cout << "Failed to create GLFW window <<" << std::endl;
@@ -72,7 +80,7 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// Specifying the OpenGL's viewport inside the window (x1, y1, x2, y2)
-	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	glViewport(0, 0, mode->width, mode->height);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -80,7 +88,7 @@ int main() {
 	
 
 	// Initialization
-	Healthier.Init();
+	Healthier.Init(mode->width, mode->height);
 
 	// DeltaTime variables
 	float deltaTime = 0.0f;
@@ -105,7 +113,7 @@ int main() {
 		Healthier.Update(deltaTime);
 
 		// Render
-		glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		Healthier.Render();
 
@@ -134,7 +142,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
-	Healthier.mousePos = glm::vec2(xpos, ypos);
+	Healthier.SetMousePos(glm::vec2(xpos, ypos));
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)

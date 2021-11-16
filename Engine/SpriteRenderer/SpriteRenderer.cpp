@@ -23,7 +23,7 @@ void SpriteRenderer::DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec
 	//    Scale -> Rotate -> Translate
 
 	// ----- TRANSLATION -----
-	// First we move the sprite to given position
+	// We move the sprite to given position
 	model = glm::translate(model, glm::vec3(position, 0.0f));
 	
 	// ----- ROTATION -----

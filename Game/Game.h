@@ -29,14 +29,14 @@ public:
     bool         keys[1024];
     glm::vec2 mousePos;
     // Resolution of the game
-    unsigned int width, height;
+    unsigned int screenWidth, screenHeight, gameWidth, gameHeight;
 
     // ---- CONSTRUCTOR/DESTRUCTOR ----
-    Game(unsigned int width, unsigned int height);
+    Game();
     ~Game();
 
     // Initialize Game State (load all shaders/textures/levels)
-    void Init();
+    void Init(unsigned int width, unsigned int height);
 
     // Loads all Textures defined
 	static void LoadAllTextures();
@@ -50,6 +50,8 @@ public:
     // Called after Update
     // Do the rendering of current frame
     void Render();
+
+    void SetMousePos(glm::vec2 pos);
 private:
     // Tells the Update() method that, when in DEBUG MODE, wether
     // we can do one iteration or not

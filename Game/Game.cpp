@@ -4,8 +4,10 @@
 // Deals with sprite rendering
 SpriteRenderer* Renderer;
 
-Game::Game(unsigned int width, unsigned int height)
-	: state(GameState::GAME_ACTIVE), keys(), mousePos(0.0f, 0.0f), width(width), height(height), canUpdate(true)
+Game::Game()
+	: state(GameState::GAME_ACTIVE), keys(), mousePos(0.0f, 0.0f), 
+	gameWidth(0), gameHeight(0), screenWidth(0), screenHeight(0),
+	canUpdate(true)
 {
 
 }
@@ -16,8 +18,17 @@ Game::~Game()
 }
 
 // Called once before everything
-void Game::Init()
+void Game::Init(unsigned int width, unsigned int height)
 {
+	this->screenWidth = width;
+	this->screenHeight = height;
+
+	// Sets Game Editor screen size variables
+	GameEditor::GAME_WIDTH = 600;
+	GameEditor::GAME_HEIGHT = this->screenHeight;
+	GameEditor::GAME_OFFSET = (this->screenWidth - 600) / 2.0f;
+	
+
 	// Loading Shaders
 	ResourceManager::LoadShader("./Engine/Shaders/sprite.vs", "./Engine/Shaders/sprite.frag", nullptr, "sprite");
 
@@ -26,8 +37,8 @@ void Game::Init()
 	glm::mat4 projection = glm::mat4(1.0f);
 	projection = glm::ortho(
 		0.0f, // Left
-		(GLfloat)this->width, // Right
-		(GLfloat)this->height, // Bottom
+		(GLfloat)this->screenWidth, // Right
+		(GLfloat)this->screenHeight, // Bottom
 		0.0f, // Top
 		-1.0f, // Near
 		1.0f // Far
@@ -45,7 +56,7 @@ void Game::Init()
 	// Loading tetures
 	LoadAllTextures();
 
-	GameEditor::LoadInitialScene(this->width, this->height);
+	GameEditor::LoadInitialScene();
 }
 
 void Game::LoadAllTextures()
@@ -150,12 +161,6 @@ void Game::Update(float dt)
 			std::string name = it->second->GetFormattedName();
 			size_t eA = GameContext::CurrentAttributes.erase(name);
 			size_t eO = GameContext::CurrentObjects.erase(name);
-
-			/*
-			if (eA && eO)
-				std::cout << "DESTROYED: " << name << std::endl;
-			else if (eO)
-				std::cout << "DESTROYED OBJECT WITHOUT ATTRIBUTE: " << name << std::endl;*/
 		}
 	}
 }
@@ -170,7 +175,7 @@ void Game::Render()
 		GameObject& go = *iter.second;
 		Renderer->DrawSprite(
 			go.sprite.texture,
-			go.transform.position,
+			go.transform.position + glm::vec2(GameEditor::GAME_OFFSET, 0.0f),
 			go.transform.size,
 			go.transform.rotation,
 			go.sprite.color);
@@ -207,6 +212,10 @@ void Game::ShowGameInfo()
 				<< "Position:   (" << gameObject.transform.position.x << ", " << gameObject.transform.position.y << ")" << std::endl;
 		}
 	}
+}
+
+void Game::SetMousePos(glm::vec2 pos) {
+	this->mousePos = pos - glm::vec2(GameEditor::GAME_OFFSET, 0.0f);
 }
 
 

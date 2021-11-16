@@ -1,5 +1,5 @@
 #include "Background.h"
-#include "../../GameContext/GameContext.h"
+#include "../../Editor/GameEditor.h"
 
 Background::Background(GameObject* go) : speed(), gameObject(go)
 {
@@ -12,16 +12,16 @@ Background::~Background()
 
 void Background::Start()
 {
-	this->speed = 100.0f;
+	this->speed = 200.0f;
 }
 
 void Background::Update(float dt, bool keys[], glm::vec2 mousePos)
 {
-	if (gameObject->transform.position.y <= -2100) {
-		gameObject->transform.position.y += 2100*2;
+	if (gameObject->transform.position.y >= GameEditor::GAME_HEIGHT) {
+		gameObject->transform.position.y -= 2100*2;
 	}
 
-	gameObject->transform.position.y -= speed * dt;
+	gameObject->transform.position.y += speed * dt;
 }
 
 void Background::setSpeed(float speed) {

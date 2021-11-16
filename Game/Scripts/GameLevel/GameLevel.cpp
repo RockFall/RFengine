@@ -46,8 +46,10 @@ void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
 
         for (int i = 0; i < amountOfDivers; i++)
         {
-            GameContext::CurrentAttributes[enemies.back()]->enemyScript.Dive();
-            enemies.pop_back();
+            int randIndex = rand() % enemies.size();
+            GameContext::CurrentAttributes[enemies[randIndex]]->enemyScript.Dive();
+            enemies.erase(enemies.begin() + randIndex);
+
             //GameContext::CurrentAttributes[enemies[i]]->enemyScript.SetSpeed(glm::vec2(60.0f, 150.0f));
         }
 
@@ -95,11 +97,11 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData, float en
     // calculate dimensions
     size_t verticalCount = enemyData.size();
     size_t horizontalCount = enemyData[0].size();
-
-    size_t lvlWidth = 500;
-    size_t distanceBetween = 10;
-    size_t topOffset = 20;
-    size_t lateralOffset = lvlWidth / 10;
+    
+    size_t distanceBetween = 10; // 10px between each enemy
+    size_t topOffset = 20; // 20px on the top
+    size_t lateralOffset = 50; // 50px in each side
+    size_t lvlWidth = GameEditor::GAME_WIDTH - (2*lateralOffset);
 
     float unit_size = std::min(((lvlWidth) / static_cast<float>(horizontalCount))-(distanceBetween), 400.0f);
 
@@ -132,8 +134,8 @@ void GameLevel::GenerateLevel(std::vector<std::vector<char>> enemyData, float en
                     break;
                 }
 
-                unsigned int yPos = (topOffset + y * (distanceBetween + unit_size));
-                unsigned int xPos = (lateralOffset + x * (distanceBetween + unit_size));
+                float yPos = (topOffset + y * (distanceBetween + unit_size));
+                float xPos = (lateralOffset + x * (distanceBetween + unit_size));
 
                 glm::vec2 pos(xPos, yPos);
                 glm::vec2 size(unit_size, unit_size);
