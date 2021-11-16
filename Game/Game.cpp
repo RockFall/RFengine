@@ -86,6 +86,11 @@ void Game::ProcessGameState(float dt)
 		state = GameState::GAME_CLOSE;
 		return;
 	}
+	// Pressing R resets the Game
+	if (keys[GLFW_KEY_R] == true) {
+		RestartGame();
+		return;
+	}
 
 	// If on debug mode, can do one iteration by pressing MIDDLE MOUSE BUTTON
 	if (this->state == GameState::GAME_DEBUG) {
@@ -132,6 +137,8 @@ void Game::ProcessGameState(float dt)
 // Called every frame second
 void Game::Update(float dt)
 {
+	this->dt = dt;
+
 	if (state == GameState::GAME_LOSE) {
 		std::cout << "GAME OVERRRRR" << std::endl;
 		return; 
@@ -196,22 +203,42 @@ void Game::ShowGameInfo()
 
 	// Prints the Player at the top
 	GameObject playerGO = *GameContext::CurrentObjects["Player_0"];
+	glm::vec2 playerSpeed = GameContext::CurrentAttributes["Player_0"]->playerScript.getSpeed();
 	std::cout << "----------------------------\n"
 		<< "GameObject: " << playerGO.GetFormattedName() << "\n"
-		<< "Position:   (" << playerGO.transform.position.x << ", " << playerGO.transform.position.y << ")" << std::endl;
+		<< "Position:   (" << playerGO.transform.position.x << ", " << playerGO.transform.position.y << ")\n" 
+		<< "Velocity:   (" << playerSpeed.x << ", " << playerSpeed.y << ")" << std::endl;
 
 	// Prints anything else
 	for (auto& iter : GameContext::CurrentObjects)
 	{
 		GameObject gameObject = *iter.second;
-
-		if (gameObject.GetName() == "EnemyV" ||
-			gameObject.GetName() == "Bullet") {
+		
+		if (gameObject.GetTag() == "Enemy") {
+			glm::vec2 enemySpeed = GameContext::CurrentAttributes[gameObject.GetFormattedName()]->enemyScript.getSpeed();
 			std::cout << "----------------------------\n"
 				<< "GameObject: " << gameObject.GetFormattedName() << "\n"
-				<< "Position:   (" << gameObject.transform.position.x << ", " << gameObject.transform.position.y << ")" << std::endl;
+				<< "Position:   (" << gameObject.transform.position.x << ", " << gameObject.transform.position.y << ")\n" 
+				<< "Velocity:   (" << enemySpeed.x << ", " << enemySpeed.y << ")" << std::endl;
+		}
+		else if (gameObject.GetName() == "Bullet") {
+			glm::vec2 bulletSpeed = GameContext::CurrentAttributes[gameObject.GetFormattedName()]->bulletScript.getSpeed();
+			std::cout << "----------------------------\n"
+				<< "GameObject: " << gameObject.GetFormattedName() << "\n"
+				<< "Position:   (" << gameObject.transform.position.x << ", " << gameObject.transform.position.y << ")\n"
+				<< "Velocity:   (" << bulletSpeed.x * dt << ", " << bulletSpeed.y * dt << ")" << std::endl;
 		}
 	}
+}
+
+void Game::RestartGame()
+{
+	state = GameState::GAME_PAUSE;
+
+	GameContext::CurrentObjects.clear();
+	GameContext::CurrentAttributes.clear();
+
+	GameEditor::LoadInitialScene();
 }
 
 void Game::SetMousePos(glm::vec2 pos) {

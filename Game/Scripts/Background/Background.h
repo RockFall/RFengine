@@ -17,6 +17,7 @@ public:
 	void Update(float dt, bool keys[], glm::vec2 mousePos);
 
 	void setSpeed(float speed);
+	void increaseSpeedBy(float speed);
 private:
 	GameObject* gameObject;
 

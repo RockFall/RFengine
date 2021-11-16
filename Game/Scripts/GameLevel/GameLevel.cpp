@@ -23,17 +23,16 @@ void GameLevel::Start()
 
 void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
 {  
+    // If all enemies dies, go to next level
     if (enemies.size() == 0) {
-        level++;
-        std::string fileName = "Resources/Levels/level0" + std::to_string(level) + ".txt";
-        Load(fileName);
+        LevelUp();
         return;
     }
 
     if (diverCountDown > 0) {
         diverCountDown -= dt;
     }
-    else {
+    else if (enemies.size() > 1) {
         // It's time for DIVERSS
         amountOfDivers = rand() % 3; // range(0 to 3)
         timeBetweenDivers = rand() % (50 / enemies.size()) + 0.5f; // range(0.5f to 7.5f)
@@ -56,6 +55,20 @@ void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
         diverCountDown = timeBetweenDivers;
     }
 
+}
+
+void GameLevel::LevelUp()
+{
+    level++;
+    std::string fileName = "Resources/Levels/level0" + std::to_string(level) + ".txt";
+    Load(fileName);
+
+    // Accelerates all Backgrounds
+    for (auto& go : GameContext::CurrentObjects) {
+        if (go.second->GetTag() == "Background") {
+            GameContext::CurrentAttributes[go.second->GetFormattedName()]->backgroundScript.increaseSpeedBy(200.0f);
+        }
+    }
 }
 
 void GameLevel::Load(std::string file)

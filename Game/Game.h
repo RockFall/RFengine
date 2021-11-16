@@ -53,12 +53,18 @@ public:
 
     void SetMousePos(glm::vec2 pos);
 private:
+    // Data of current deltaTime for debug and print purposes
+    float dt;
     // Tells the Update() method that, when in DEBUG MODE, wether
     // we can do one iteration or not
     bool canUpdate;
 
+
     // Prints on the terminal info about every GameObject with meaning
     void ShowGameInfo();
+    // Resets entirely the game
+    void RestartGame();
+    
 };
 
 #endif

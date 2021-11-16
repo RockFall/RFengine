@@ -25,6 +25,8 @@ public:
 	// Has a cooldown rate
 	void Shoot(bool clicking, float dt);
 
+	glm::vec2 getSpeed();
+
 private:
 	// Player GameObject
 	GameObject* gameObject;

@@ -22,10 +22,6 @@ public:
 	// Called every frame
 	void Update(float dt, bool keys[], glm::vec2 mousePos);
 
-	// Loads a Level Data from a file
-	void Load(std::string file);
-	// From file data, creates each enemy's GameObject
-	void GenerateLevel(std::vector<std::vector<char>> enemyData, float enemySpeed);
 	// Called when an enemy dies. Removes it from the internal vector
 	void EnemyDied(std::string name);
 
@@ -43,6 +39,14 @@ private:
 	float diverCountDown;
 	float timeBetweenDivers;
 	int amountOfDivers;
+
+	// Go to next level
+	void LevelUp();
+
+	// Loads a Level Data from a file
+	void Load(std::string file);
+	// From file data, creates each enemy's GameObject
+	void GenerateLevel(std::vector<std::vector<char>> enemyData, float enemySpeed);
 };
 
 #endif

@@ -10,7 +10,7 @@ class Enemy : BaseBehaviour
 {
 public:
 	// ------ CONSTRUCTOR ------
-	Enemy() : movementRange(0.0f), xTargetPos(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr), timeSinceLastShot(0.0f), shootingRate(0), bulletSize(0), health(0)  { }
+	Enemy() : movementRange(0.0f), xTargetPos(0.0f), initialMove(false), originalPos(0.0f), speed(0.0f), diving(false), gameObject(nullptr), timeSinceLastShot(0.0f), shootingRate(0), bulletSize(0), health(0), isBoss(false)  { }
 	Enemy(GameObject* go);
 	~Enemy();
 
@@ -26,6 +26,7 @@ public:
 	// Setters and Getters
 	void SetYSpeed(float speed);
 	void SetSpeed(glm::vec2 speed);
+	glm::vec2 getSpeed();
 
 	void Dive();
 	void Shoot(float dt);
@@ -40,6 +41,7 @@ private:
 	glm::vec2 speed;
 
 	// Life variables
+	bool isBoss;
 	int health;
 
 	// Movement position

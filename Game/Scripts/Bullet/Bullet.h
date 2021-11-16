@@ -24,6 +24,7 @@ public:
 
 	void setSpeed(glm::vec2 speed);
 	void setTarget(std::string name);
+	glm::vec2 getSpeed();
 
 	// Checks if the bullet is out of the screen, is so, destroys it
 	void CheckOutScreen();

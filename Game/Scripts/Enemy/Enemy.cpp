@@ -3,7 +3,7 @@
 
 #include <random>
 
-Enemy::Enemy(GameObject* go) : gameObject(go), speed(0.0f), movementRange(0.0f), xTargetPos(0.0f), originalPos(0.0f), diving(false), initialMove(false), timeSinceLastShot(0.0f), shootingRate(0), bulletSize(0)
+Enemy::Enemy(GameObject* go) : gameObject(go), speed(0.0f), movementRange(0.0f), xTargetPos(0.0f), originalPos(0.0f), diving(false), initialMove(false), timeSinceLastShot(0.0f), shootingRate(0), bulletSize(0), isBoss(false)
 {
 	Start();
 }
@@ -20,19 +20,35 @@ void Enemy::Start()
 
 	shootingRate = 0.75f;
 	bulletSize = gameObject->transform.size/2.0f;
+	timeSinceLastShot = 1.0f;
 
 	health = ceil(gameObject->transform.size.x / 50.0f);
+	if (gameObject->transform.size.x >= 400.0f) {
+		isBoss == true;
+		timeSinceLastShot = 1.0f;
+		health = 20;
+	}
 }
 
 void Enemy::Update(float dt, bool keys[], glm::vec2 mousePos)
 {
-	if (diving && gameObject->transform.position.y <= 520 && gameObject->transform.position.y > originalPos.y + 200.0f) {
-		Shoot(dt);
+	if (diving) {
+		// If diving, the enemy WILL shoot, when in a certain area 
+		if (gameObject->transform.position.y <= 520 && gameObject->transform.position.y > originalPos.y + 200.0f) {
+			Shoot(dt);
+		}
 	}
+	else {
+		if (isBoss) // If it is a boss, will shoot based on shootSpeed
+			Shoot(dt);
+		else if (rand() % 10 == 0) // Will call shoot with 10% chance
+			Shoot(dt);
 
-	if (gameObject->transform.position.y >= GameEditor::GAME_HEIGHT && diving == false) {
-		GameContext::gameOver = true;
-		GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
+		// If non-divers get to the bottom of the screen, it is GAME OVER
+		if (gameObject->transform.position.y >= GameEditor::GAME_HEIGHT) {
+			GameContext::gameOver = true;
+			GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
+		}
 	}
 
 	DoMovement(dt);
@@ -67,6 +83,11 @@ void Enemy::SetYSpeed(float speed)
 void Enemy::SetSpeed(glm::vec2 speed)
 {
 	this->speed = speed;
+}
+
+glm::vec2 Enemy::getSpeed()
+{
+	return this->speed;
 }
 
 void Enemy::Dive()

@@ -27,3 +27,8 @@ void Background::Update(float dt, bool keys[], glm::vec2 mousePos)
 void Background::setSpeed(float speed) {
 	this->speed = speed;
 }
+
+void Background::increaseSpeedBy(float speed)
+{
+	this->speed += speed;
+}

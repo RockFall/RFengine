@@ -56,3 +56,8 @@ void Player::Shoot(bool clicking, float dt) {
 		GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(glm::vec2(0.0f, -1000.0f));
 	}
 }
+
+glm::vec2 Player::getSpeed()
+{
+	return glm::vec2(this->speed, 0.0f);
+}

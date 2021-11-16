@@ -11,18 +11,27 @@ void GameEditor::LoadInitialScene()
 {
 	// --------- BACKGROUND -------------
 	float BG_HEIGHT = 2100.0f;
-	CreateGameObject("Background", glm::vec2(0.0f, GAME_HEIGHT - BG_HEIGHT), true, glm::vec2(GAME_WIDTH, BG_HEIGHT));
-	CreateGameObject("Background", glm::vec2(0.0f, GAME_HEIGHT - BG_HEIGHT*2), true, glm::vec2(GAME_WIDTH, BG_HEIGHT));
+	std::string ID = CreateGameObject("Background", glm::vec2(0.0f, GAME_HEIGHT - BG_HEIGHT), true, glm::vec2(GAME_WIDTH, BG_HEIGHT));
+	GameContext::CurrentObjects[ID]->SetTag("Background");
 
-	std::string ID = CreateGameObject("Background", glm::vec2(0.0f, -BG_HEIGHT), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "Fights01");
-	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(35.0f);
-	ID = CreateGameObject("Background", glm::vec2(0.0f, BG_HEIGHT * 2), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "Fights02");
-	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(35.0f);
+	ID = CreateGameObject("Background", glm::vec2(0.0f, GAME_HEIGHT - BG_HEIGHT*2), true, glm::vec2(GAME_WIDTH, BG_HEIGHT));
+	GameContext::CurrentObjects[ID]->SetTag("Background");
 
-	ID = CreateGameObject("Background", glm::vec2(0.0f, -BG_HEIGHT), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "BackgroundHemacias");
+	ID = CreateGameObject("Background", glm::vec2(0.0f, -BG_HEIGHT), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "Fights01");
+	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(35.0f);
+	GameContext::CurrentObjects[ID]->SetTag("Background");
+
+	ID = CreateGameObject("Background", glm::vec2(0.0f, -BG_HEIGHT * 2), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "Fights02");
+	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(35.0f);
+	GameContext::CurrentObjects[ID]->SetTag("Background");
+	// ------ HEMACIAS 01 --------
+	ID = CreateGameObject("Background", glm::vec2(0.0f, GAME_HEIGHT - BG_HEIGHT), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "BackgroundHemacias");
 	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(100.0f);
-	ID = CreateGameObject("Background", glm::vec2(0.0f, -BG_HEIGHT * 2), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "BackgroundHemacias");
+	GameContext::CurrentObjects[ID]->SetTag("Background");
+	// ------ HEMACIAS 02 --------
+	ID = CreateGameObject("Background", glm::vec2(0.0f, GAME_HEIGHT - BG_HEIGHT * 2), true, glm::vec2(GAME_WIDTH, BG_HEIGHT), true, "BackgroundHemacias");
 	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(100.0f);
+	GameContext::CurrentObjects[ID]->SetTag("Background");
 
 	// ---- Creating Player ----
 

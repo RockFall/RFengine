@@ -43,6 +43,11 @@ void Bullet::setTarget(std::string name)
 	this->targetName = name;
 }
 
+glm::vec2 Bullet::getSpeed()
+{
+	return this->speed;
+}
+
 void Bullet::CheckOutScreen() {
 	if (gameObject->transform.position.y < -gameObject->transform.size.y)
 	{
