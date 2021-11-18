@@ -4,9 +4,16 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
+//#include <ft2build.h>
+//#include FT_FREETYPE_H
+
 #include "AttributeManager/AttributeManager.h"
 #include "../../Engine/ResourceManager/ResourceManager.h"
+
 #include "../Engine/SpriteRenderer/SpriteRenderer.h"
+#include "../Engine/SoundPlayer/SoundPlayer.h"
+#include "../Engine/ParticleGenerator/ParticleGenerator.h"
+#include "../Engine/TextRenderer/TextRenderer.h"
 
 #include "Editor/GameEditor.h"
 
@@ -40,6 +47,9 @@ public:
 
     // Loads all Textures defined
 	static void LoadAllTextures();
+
+    // Load all Sounds defined
+    static void LoadAllSounds();
 
     // Deals with the game state
     void ProcessGameState(float dt);

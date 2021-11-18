@@ -18,6 +18,9 @@ public:
 
 	void setSpeed(float speed);
 	void increaseSpeedBy(float speed);
+
+	float getSpeed();
+
 private:
 	GameObject* gameObject;
 

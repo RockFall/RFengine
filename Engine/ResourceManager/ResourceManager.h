@@ -19,9 +19,9 @@ class ResourceManager
 {
 public:
     // Resource storage
-    static std::map<std::string, Shader>    Shaders;
-    static std::map<std::string, Texture2D> Textures;
-    
+    static std::map<std::string, Shader>        Shaders;
+    static std::map<std::string, Texture2D>     Textures;
+    static std::map<std::string, std::string>   SoundPaths;
 
     // From given vertex, fragment and optionally geometry shaders source codes, 
     // it loads all shaders, creating multiple Shader instances and returning them. 
@@ -36,6 +36,10 @@ public:
 
     // Returns texture with given name from global map
     static Texture2D GetTexture(std::string name);
+
+    static std::string LoadSound(std::string filePath, std::string soundName);
+
+    static std::string GetSoundPath(std::string name);
 
     // De-allocates all loaded shaders and textures
     static void Clear();

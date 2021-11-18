@@ -32,3 +32,8 @@ void Background::increaseSpeedBy(float speed)
 {
 	this->speed += speed;
 }
+
+float Background::getSpeed()
+{
+	return this->speed;
+}

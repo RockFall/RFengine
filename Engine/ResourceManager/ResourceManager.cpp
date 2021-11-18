@@ -10,6 +10,7 @@
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::Textures;
 std::map<std::string, Shader>       ResourceManager::Shaders;
+std::map<std::string, std::string>  ResourceManager::SoundPaths;
 
 
 Shader ResourceManager::LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name)
@@ -40,6 +41,23 @@ Texture2D ResourceManager::GetTexture(std::string name)
     }
 
     return Textures[name];
+}
+
+std::string ResourceManager::LoadSound(std::string filePath, std::string soundName)
+{
+    SoundPaths[soundName] = filePath;
+    return SoundPaths[soundName];
+}
+
+std::string ResourceManager::GetSoundPath(std::string name)
+{
+    if (SoundPaths.find(name) == SoundPaths.end()) {
+        std::cout << "RESOURCE MANAGER: Sound \"" << name << "\" not found on internal std::map.\n" <<
+            "Have you added it to Game::LoadAllSounds ?\n-----------------------------------------" << std::endl;
+        return "";
+    }
+
+    return SoundPaths[name];
 }
 
 void ResourceManager::Clear()

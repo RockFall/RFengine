@@ -12,7 +12,9 @@ Player::~Player()
 
 void Player::Start()
 {
-	shootingRate = 10.0f;
+	lives = 2;
+
+	shootingRate = 20.0f;
 	bulletSize = 75;
 	speed = 60.0f;
 }
@@ -43,7 +45,9 @@ void Player::Shoot(bool clicking, float dt) {
 	}
 
 	if (clicking) {
+		// Resets refresh time
 		timeSinceLastShot = 1/shootingRate;
+		// Creates Bullet GameObject
 		std::string bulletID = GameEditor::CreateGameObject(
 			"Bullet",
 			gameObject->transform.position + glm::vec2(0.0f, -50.0f),
@@ -52,9 +56,39 @@ void Player::Shoot(bool clicking, float dt) {
 			true,
 			"Anticorpo"
 		);
+		// Bullet variables setup
+		GameContext::CurrentObjects[bulletID]->SetTag("Bullet");
 		GameEditor::GameObjectSetSolid(bulletID, true);
 		GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(glm::vec2(0.0f, -1000.0f));
+
+		// Play shoot sound
+		GameContext::SoundQueue.push(std::make_pair("Player Shoot", 0.2f));
 	}
+}
+
+void Player::Hit(int damage, float dt)
+{
+	this->lives--;
+	if (lives <= 0) {
+		Die(dt);
+	}
+}
+
+void Player::Die(float dt)
+{
+	GameContext::CurrentObjects[gameObject->GetFormattedName()]->hasBeenDestroyed = true;
+	GameContext::gameOver = true;
+
+	/*
+	for (auto& go : GameContext::CurrentObjects) {
+		if (go.second->GetFormattedName() != "Background_0" && 
+			go.second->GetFormattedName() != "Background_1" &&
+			go.second->GetTag() == "Background") {
+			float speed = GameContext::CurrentAttributes[go.second->GetFormattedName()]->backgroundScript.getSpeed();
+			GameContext::CurrentAttributes[go.second->GetFormattedName()]->backgroundScript.setSpeed(30.0f);
+		}
+		
+	}*/
 }
 
 glm::vec2 Player::getSpeed()

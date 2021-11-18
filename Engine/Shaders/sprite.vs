@@ -1,10 +1,10 @@
 #version 330 core
 
-	// location defines attribute's position on VAO position
-	// Position (vec2 - position, vec2 - texture coordinates)
+// location defines attribute's position on VAO position
+// Position (vec2 - position, vec2 - texture coordinates)
 layout (location = 0) in vec4 vertex;
 
-	// and the texture coordinates
+// and the texture coordinates
 out vec2 texCoords;
 
 uniform mat4 model;

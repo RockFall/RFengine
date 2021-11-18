@@ -25,6 +25,9 @@ public:
 	// Has a cooldown rate
 	void Shoot(bool clicking, float dt);
 
+	void Hit(int damage, float dt);
+	void Die(float dt);
+
 	glm::vec2 getSpeed();
 
 private:

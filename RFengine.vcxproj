@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\include;$(IncludePath);$(SolutionDir)Libraries\include</IncludePath>
+    <LibraryPath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\lib;$(LibraryPath);$(SolutionDir)RFengine\Libraries\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -81,11 +81,13 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(SolutionDir)Libraries\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)RFengine\Libraries\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\include;$(IncludePath);$(SolutionDir)Libraries\include</IncludePath>
+    <LibraryPath>D:\Projetos\Pessoais\OpenGL\RFengine\Libraries\lib;$(LibraryPath);$(SolutionDir)RFengine\Libraries\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -93,6 +95,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\$(Plataform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\bin\intermediates\$(Plataform)\$(Configuration)\</IntDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(SolutionDir)Libraries\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)RFengine\Libraries\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -104,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies);glfw3.lib;irrKlang.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,6 +125,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);glfw3.lib;irrKlang.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,7 +138,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies);glfw3.lib;irrKlang.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,9 +155,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);glfw3.lib;irrKlang.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\TextRenderer\TextRenderer.cpp" />
     <ClCompile Include="Game\Scripts\Background\Background.cpp" />
     <ClCompile Include="Game\Scripts\GameLevel\GameLevel.cpp" />
     <ClCompile Include="Game\Scripts\Enemy\Enemy.cpp" />
@@ -174,12 +181,20 @@
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Scripts\Bullet\Bullet.cpp" />
     <ClCompile Include="Game\Scripts\Player\Player.cpp" />
+    <ClCompile Include="Engine\SoundPlayer\SoundPlayer.cpp" />
+    <ClCompile Include="Engine\ParticleGenerator\ParticleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Engine\Shaders\particle.frag" />
+    <None Include="Engine\Shaders\particle.vs" />
     <None Include="Engine\Shaders\sprite.frag" />
     <None Include="Engine\Shaders\sprite.vs" />
+    <None Include="Engine\Shaders\text_2d.frag" />
+    <None Include="Engine\Shaders\text_2d.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\ParticleGenerator\Particle.h" />
+    <ClInclude Include="Engine\TextRenderer\TextRenderer.h" />
     <ClInclude Include="Game\Scripts\Background\Background.h" />
     <ClInclude Include="Game\Scripts\BaseBehaviour.h" />
     <ClInclude Include="Game\Scripts\GameLevel\GameLevel.h" />
@@ -200,6 +215,8 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Scripts\Bullet\Bullet.h" />
     <ClInclude Include="Game\Scripts\Player\Player.h" />
+    <ClInclude Include="Engine\SoundPlayer\SoundPlayer.h" />
+    <ClInclude Include="Engine\ParticleGenerator\ParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="C:\Users\caioh\Desktop\drama.png" />

@@ -23,6 +23,9 @@ void GameLevel::Start()
 
 void GameLevel::Update(float dt, bool keys[], glm::vec2 mousePos)
 {  
+    if (GameContext::gameOver)
+        return;
+
     // If all enemies dies, go to next level
     if (enemies.size() == 0) {
         LevelUp();

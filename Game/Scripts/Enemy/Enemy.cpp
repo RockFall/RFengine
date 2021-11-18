@@ -24,7 +24,7 @@ void Enemy::Start()
 
 	health = ceil(gameObject->transform.size.x / 50.0f);
 	if (gameObject->transform.size.x >= 400.0f) {
-		isBoss == true;
+		isBoss = true;
 		timeSinceLastShot = 1.0f;
 		health = 20;
 	}
@@ -32,23 +32,31 @@ void Enemy::Start()
 
 void Enemy::Update(float dt, bool keys[], glm::vec2 mousePos)
 {
-	if (diving) {
+	if (GameContext::gameOver)
+		return;
+
+	if (diving && GameContext::gameOver == false) {
 		// If diving, the enemy WILL shoot, when in a certain area 
 		if (gameObject->transform.position.y <= 520 && gameObject->transform.position.y > originalPos.y + 200.0f) {
 			Shoot(dt);
 		}
+
+		if (gameObject->transform.position.y >= GameEditor::GAME_HEIGHT) {
+			gameObject->transform.position.y -= GameEditor::GAME_HEIGHT * 1.3f;
+		}
 	}
 	else {
-		if (isBoss) // If it is a boss, will shoot based on shootSpeed
-			Shoot(dt);
-		else if (rand() % 10 == 0) // Will call shoot with 10% chance
-			Shoot(dt);
-
 		// If non-divers get to the bottom of the screen, it is GAME OVER
 		if (gameObject->transform.position.y >= GameEditor::GAME_HEIGHT) {
-			GameContext::gameOver = true;
+			if (GameContext::gameOver == false)
+				GameContext::gameOver = true;
 			GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
 		}
+
+		if (isBoss) // If it is a boss, will shoot based on shootSpeed
+			Shoot(dt);
+		else if (rand() % 30 == 0) // Will call shoot with 10% chance
+			Shoot(dt);
 	}
 
 	DoMovement(dt);
@@ -96,7 +104,8 @@ void Enemy::Dive()
 	this->diving = true;
 	// random initial shooting time
 	timeSinceLastShot = (rand() % 60) / 60.0f;
-	std::cout << "Shoting in " << timeSinceLastShot << std::endl;
+
+	GameContext::SoundQueue.push(std::make_pair("Dive", 0.5f));
 }
 
 void Enemy::Shoot(float dt)
@@ -107,28 +116,40 @@ void Enemy::Shoot(float dt)
 	}
 
 	timeSinceLastShot = 1 / shootingRate;
+	
+	glm::vec2 bulletPos = gameObject->transform.position + (gameObject->transform.size / 2.0f);
 
 	std::string bulletID = GameEditor::CreateGameObject(
 		"Bullet",
-		(gameObject->transform.position + (gameObject->transform.size / 2.0f)),
+		bulletPos,
 		true,
 		bulletSize,
 		true,
 		"RNA"
 	);
 
-	//GameContext::CurrentObjects["Player"]->transform.position.x - gameObject->transform.position.x
+	GameContext::CurrentObjects[bulletID]->SetTag("Bullet");
 
 	glm::vec2 playerSize = GameContext::CurrentObjects["Player_0"]->transform.size;
-	glm::vec2 playerPos = GameContext::CurrentObjects["Player_0"]->transform.position + playerSize/2.0f;
-	glm::vec2 bulletDirection = glm::normalize(playerPos - gameObject->transform.position);
+	glm::vec2 playerPos = GameContext::CurrentObjects["Player_0"]->transform.position + (playerSize/2.0f);
+	glm::vec2 bulletDirection = glm::normalize(playerPos - bulletPos);
 
 	GameContext::CurrentAttributes[bulletID]->bulletScript.setSpeed(bulletDirection * 400.0f);
 	GameContext::CurrentAttributes[bulletID]->bulletScript.setTarget("Player");
 	GameEditor::GameObjectSetSolid(bulletID, true);
+
+	// Play sound
+	GameContext::SoundQueue.push(std::make_pair("Enemy Shoot", 0.4f));
+	
 }
 
 void Enemy::Hit(int damage) {
+	if (health == 1) {
+		GameContext::SoundQueue.push(std::make_pair("Hit little", 0.5f));
+	}
+	else {
+		GameContext::SoundQueue.push(std::make_pair("Hit big", 0.7f));
+	}
 	this->health -= damage;
 	if (health <= 0) {
 		GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(gameObject->GetFormattedName());

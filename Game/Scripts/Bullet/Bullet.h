@@ -29,7 +29,7 @@ public:
 	// Checks if the bullet is out of the screen, is so, destroys it
 	void CheckOutScreen();
 
-	void DoCollisions();
+	void DoCollisions(float dt);
 
 	bool CheckCollision(GameObject* one, GameObject* two);
 

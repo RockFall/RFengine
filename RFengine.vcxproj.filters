@@ -87,6 +87,15 @@
     <ClCompile Include="Game\Scripts\Background\Background.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\SoundPlayer\SoundPlayer.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ParticleGenerator\ParticleGenerator.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\TextRenderer\TextRenderer.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\sprite.vs">
@@ -95,6 +104,10 @@
     <None Include="Engine\Shaders\sprite.frag">
       <Filter>Arquivos de Recurso\Shaders</Filter>
     </None>
+    <None Include="Engine\Shaders\particle.frag" />
+    <None Include="Engine\Shaders\particle.vs" />
+    <None Include="Engine\Shaders\text_2d.vs" />
+    <None Include="Engine\Shaders\text_2d.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Shaders\Shader.h">
@@ -155,6 +168,18 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Game\Scripts\Background\Background.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SoundPlayer\SoundPlayer.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ParticleGenerator\Particle.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ParticleGenerator\ParticleGenerator.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TextRenderer\TextRenderer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

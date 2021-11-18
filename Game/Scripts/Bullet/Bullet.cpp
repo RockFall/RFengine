@@ -2,7 +2,6 @@
 #include "../../Editor/GameEditor.h"
 #include "../GameLevel/GameLevel.h"
 #include "../../../Engine/GameObject/Attribute.h"
-#include "../../../Engine/GameObject/Attribute.h"
 
 Bullet::Bullet(GameObject* go) :  gameObject(go), speed(0.0f), targetName(), damage(0)
 {
@@ -25,7 +24,7 @@ void Bullet::Update(float dt, bool keys[], glm::vec2 mousePos)
 	
 	CheckOutScreen();
 
-	DoCollisions();
+	DoCollisions(dt);
 }
 
 void Bullet::DoMovement(float dt)
@@ -49,13 +48,14 @@ glm::vec2 Bullet::getSpeed()
 }
 
 void Bullet::CheckOutScreen() {
-	if (gameObject->transform.position.y < -gameObject->transform.size.y)
+	if (gameObject->transform.position.y < -gameObject->transform.size.y ||
+		gameObject->transform.position.y > GameEditor::GAME_HEIGHT)
 	{
 		GameEditor::DestroyGameObject(gameObject->GetFormattedName());
 	}
 }
 
-void Bullet::DoCollisions()
+void Bullet::DoCollisions(float dt)
 {
 	for (auto& targetIt : GameContext::CurrentObjects) {
 		if (targetIt.second->hasBeenDestroyed == false 
@@ -67,8 +67,8 @@ void Bullet::DoCollisions()
 					GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
 				}
 				else if (targetIt.second->GetTag() == "Player") {
+					GameContext::CurrentAttributes[targetIt.second->GetFormattedName()]->playerScript.Hit(damage, dt);
 					GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
-					std::cout << "Player acertado! -1 vida" << std::endl;
 				}
 				return;
 			}

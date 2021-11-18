@@ -3,9 +3,11 @@
 
 #include <map>
 #include <string>
+#include <math.h>
 
 #include "../../Engine/GameObject/GameObject.h"
 #include "../GameContext/GameContext.h"
+#include "../../Engine/SoundPlayer/SoundPlayer.h"
 
 class AttributeManager;
 
@@ -41,6 +43,8 @@ public:
 
 	// Sets the given GameObject as Solid so it can be collided with
 	static void GameObjectSetSolid(std::string name, bool isSolid);
+
+	static void PlayerDeathScene(float dt);
 private:
 	// Private constructor so this static class cannot be wrongfully instantiated
 	GameEditor() { }

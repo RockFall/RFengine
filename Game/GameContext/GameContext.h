@@ -2,6 +2,7 @@
 #define GAME_CONTEXT_H
 
 #include <map>
+#include <queue>
 #include <string>
 #include <memory>
 
@@ -13,6 +14,7 @@ class GameContext
 public:
 	static std::map<std::string, std::unique_ptr<GameObject>> CurrentObjects;
 	static std::map<std::string, std::unique_ptr<Attribute>> CurrentAttributes;
+	static std::queue<std::pair<std::string, float>> SoundQueue;
 
 	static bool gameOver;
 

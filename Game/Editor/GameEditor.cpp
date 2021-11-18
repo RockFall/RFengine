@@ -89,3 +89,41 @@ void GameEditor::GameObjectSetSolid(std::string name, bool isSolid)
 {
 	GameContext::CurrentObjects[name]->isSolid = isSolid;
 }
+
+void GameEditor::PlayerDeathScene(float dt)
+{
+	float backgroundYSpeed = GameContext::CurrentAttributes["Background_0"]->backgroundScript.getSpeed();
+	float background2YSpeed = GameContext::CurrentAttributes["Background_2"]->backgroundScript.getSpeed();
+	float background4YSpeed = GameContext::CurrentAttributes["Background_4"]->backgroundScript.getSpeed();
+
+	for (auto& go : GameContext::CurrentObjects) {
+		if (go.second->GetTag() == "Enemy" || go.second->GetTag() == "Bullet") {
+			if (go.second->transform.position.y < -200.0f)
+				go.second->hasBeenDestroyed = true;
+
+			go.second->transform.position.y -= dt * 10.0f * backgroundYSpeed;
+		}
+
+	}
+
+	if (backgroundYSpeed > 0.01) {
+		GameContext::CurrentAttributes["Background_0"]->backgroundScript.increaseSpeedBy(-(log10(backgroundYSpeed) * 10 + 20) * dt);
+		GameContext::CurrentAttributes["Background_1"]->backgroundScript.increaseSpeedBy(-(log10(backgroundYSpeed) * 10 + 20) * dt);
+	
+		GameContext::CurrentAttributes["Background_2"]->backgroundScript.increaseSpeedBy(-(log10(backgroundYSpeed) * 10 + 20) * dt);
+		GameContext::CurrentAttributes["Background_3"]->backgroundScript.increaseSpeedBy(-(log10(backgroundYSpeed) * 10 + 20) * dt);
+		GameContext::CurrentAttributes["Background_4"]->backgroundScript.increaseSpeedBy(-(log10(backgroundYSpeed) * 10 + 20) * dt);
+		GameContext::CurrentAttributes["Background_5"]->backgroundScript.increaseSpeedBy(-(log10(backgroundYSpeed) * 10 + 20) * dt);
+
+	}
+	else {
+		GameContext::CurrentAttributes["Background_0"]->backgroundScript.setSpeed(0);
+		GameContext::CurrentAttributes["Background_1"]->backgroundScript.setSpeed(0);
+
+		GameContext::CurrentAttributes["Background_2"]->backgroundScript.setSpeed(-100);
+		GameContext::CurrentAttributes["Background_3"]->backgroundScript.setSpeed(-100);
+		GameContext::CurrentAttributes["Background_4"]->backgroundScript.setSpeed(-100);
+		GameContext::CurrentAttributes["Background_5"]->backgroundScript.setSpeed(-100);
+	}
+	
+}

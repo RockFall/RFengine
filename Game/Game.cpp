@@ -3,11 +3,17 @@
 
 // Deals with sprite rendering
 SpriteRenderer* Renderer;
+// Deals with Sounds
+SoundPlayer* Sounds;
+// Creates Particles
+ParticleGenerator* Particles;
+// Handles Text
+//TextRenderer* Text;
 
 Game::Game()
 	: state(GameState::GAME_ACTIVE), keys(), mousePos(0.0f, 0.0f), 
 	gameWidth(0), gameHeight(0), screenWidth(0), screenHeight(0),
-	canUpdate(true)
+	canUpdate(true), dt(0)
 {
 
 }
@@ -15,11 +21,15 @@ Game::Game()
 Game::~Game()
 {
 	delete Renderer;
+	delete Sounds;
+	delete Particles;
+	//delete Text;
 }
 
 // Called once before everything
 void Game::Init(unsigned int width, unsigned int height)
 {
+
 	this->screenWidth = width;
 	this->screenHeight = height;
 
@@ -31,6 +41,7 @@ void Game::Init(unsigned int width, unsigned int height)
 
 	// Loading Shaders
 	ResourceManager::LoadShader("./Engine/Shaders/sprite.vs", "./Engine/Shaders/sprite.frag", nullptr, "sprite");
+	ResourceManager::LoadShader("./Engine/Shaders/particle.vs", "./Engine/Shaders/particle.frag", nullptr, "particle");
 
 	// Configuring Shaders
 	// Applying orthigraphic projection over World Space (as we don't have a needed camera)
@@ -51,11 +62,30 @@ void Game::Init(unsigned int width, unsigned int height)
 
 	// Creates the SpriteRenderer with the just created shader
 	Shader spriteShader = ResourceManager::GetShader("sprite");
+	
 	Renderer = new SpriteRenderer(spriteShader);
+	Sounds = new SoundPlayer();
 
 	// Loading tetures
 	LoadAllTextures();
 
+	// Creating particles generator and setting projection to shader
+	Particles = new ParticleGenerator(
+		ResourceManager::GetShader("particle"),
+		ResourceManager::GetTexture("Player"),
+		500
+	);
+
+	ResourceManager::GetShader("particle").Activate().SetMatrix4("projection", projection);
+
+	// Set up Text
+	//Text = new TextRenderer(this->screenWidth, this->screenHeight);
+	//Text->Load("Resources/Fonts/ocraext.TTF", 24);
+
+	// Loading sounds
+	LoadAllSounds();
+
+	Sounds->Play(ResourceManager::GetSoundPath("Background Music"), true);
 	GameEditor::LoadInitialScene();
 }
 
@@ -75,7 +105,15 @@ void Game::LoadAllTextures()
 	ResourceManager::LoadTexture("Resources/BackgroundHemacias.png", true, "BackgroundHemacias");
 	ResourceManager::LoadTexture("Resources/Fights01.png", true, "Fights01");
 	ResourceManager::LoadTexture("Resources/Fights02.png", true, "Fights02");
+}
 
+void Game::LoadAllSounds() {
+	ResourceManager::LoadSound("Resources/Sounds/music.mp3", "Background Music");
+	ResourceManager::LoadSound("Resources/Sounds/PlayerShoot.mp3", "Player Shoot");
+	ResourceManager::LoadSound("Resources/Sounds/EnemyShoot.mp3", "Enemy Shoot");
+	ResourceManager::LoadSound("Resources/Sounds/Hit01.mp3", "Hit little");
+	ResourceManager::LoadSound("Resources/Sounds/Hit02.mp3", "Hit big");
+	ResourceManager::LoadSound("Resources/Sounds/Dive.mp3", "Dive");
 }
 
 // Called every frame first
@@ -119,7 +157,7 @@ void Game::ProcessGameState(float dt)
 		}
 
 		if (GameContext::gameOver == true) {
-			state = GameState::GAME_LOSE;
+			//state = GameState::GAME_LOSE;
 		}
 	}
 
@@ -140,8 +178,13 @@ void Game::Update(float dt)
 	this->dt = dt;
 
 	if (state == GameState::GAME_LOSE) {
-		std::cout << "GAME OVERRRRR" << std::endl;
-		return; 
+		GameEditor::PlayerDeathScene(dt);
+		return;
+	}
+	
+	if (GameContext::gameOver) {
+		GameEditor::PlayerDeathScene(dt);
+		//return;
 	}
 
 	// If the game is paused
@@ -163,6 +206,10 @@ void Game::Update(float dt)
 	// Checks and destroy gameObjects if needed
 	for (auto it = GameContext::CurrentObjects.cbegin(), next_it = it; it != GameContext::CurrentObjects.cend(); it = next_it)
 	{
+		if (it->second->GetName() == "Player") {
+			Particles->Update(dt, *it->second, 2, glm::vec2(it->second->transform.size / 2.0f));
+		}
+
 		++next_it;
 		if (it->second->hasBeenDestroyed) {
 			std::string name = it->second->GetFormattedName();
@@ -175,17 +222,33 @@ void Game::Update(float dt)
 // Called every frame at last
 void Game::Render()
 {
+	
+
 	// Do the rendering of all GameObjects on Scene 
 	// in their current location
 	for (auto& iter : GameContext::CurrentObjects)
 	{
 		GameObject& go = *iter.second;
+		if (go.GetName() == "Player") {
+			Particles->Draw(glm::vec2(GameEditor::GAME_OFFSET, 0.0f));
+		}
+
 		Renderer->DrawSprite(
 			go.sprite.texture,
 			go.transform.position + glm::vec2(GameEditor::GAME_OFFSET, 0.0f),
 			go.transform.size,
 			go.transform.rotation,
 			go.sprite.color);
+	}
+
+	
+
+	// Play all queued sounds
+	for (size_t i = 0; i < GameContext::SoundQueue.size(); i++)
+	{
+		std::string soundPath = ResourceManager::GetSoundPath(GameContext::SoundQueue.front().first);
+		Sounds->Play(soundPath, false, GameContext::SoundQueue.front().second);
+		GameContext::SoundQueue.pop();
 	}
 }
 
@@ -202,13 +265,14 @@ void Game::ShowGameInfo()
 	std::cout << "    GAME IN DEBUG MODE" << std::endl;
 
 	// Prints the Player at the top
-	GameObject playerGO = *GameContext::CurrentObjects["Player_0"];
-	glm::vec2 playerSpeed = GameContext::CurrentAttributes["Player_0"]->playerScript.getSpeed();
-	std::cout << "----------------------------\n"
-		<< "GameObject: " << playerGO.GetFormattedName() << "\n"
-		<< "Position:   (" << playerGO.transform.position.x << ", " << playerGO.transform.position.y << ")\n" 
-		<< "Velocity:   (" << playerSpeed.x << ", " << playerSpeed.y << ")" << std::endl;
-
+	if (GameContext::gameOver != true) {
+		GameObject playerGO = *GameContext::CurrentObjects["Player_0"];
+		glm::vec2 playerSpeed = GameContext::CurrentAttributes["Player_0"]->playerScript.getSpeed();
+		std::cout << "----------------------------\n"
+			<< "GameObject: " << playerGO.GetFormattedName() << "\n"
+			<< "Position:   (" << playerGO.transform.position.x << ", " << playerGO.transform.position.y << ")\n"
+			<< "Velocity:   (" << playerSpeed.x << ", " << playerSpeed.y << ")" << std::endl;
+	}
 	// Prints anything else
 	for (auto& iter : GameContext::CurrentObjects)
 	{
