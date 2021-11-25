@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\TextRenderer\TextRenderer.cpp" />
+    <ClCompile Include="Game\Scripts\AnimatedSprite\AnimatedSprite.cpp" />
     <ClCompile Include="Game\Scripts\Background\Background.cpp" />
     <ClCompile Include="Game\Scripts\GameLevel\GameLevel.cpp" />
     <ClCompile Include="Game\Scripts\Enemy\Enemy.cpp" />
@@ -195,6 +196,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\ParticleGenerator\Particle.h" />
     <ClInclude Include="Engine\TextRenderer\TextRenderer.h" />
+    <ClInclude Include="Game\Scripts\AnimatedSprite\AnimatedSprite.h" />
     <ClInclude Include="Game\Scripts\Background\Background.h" />
     <ClInclude Include="Game\Scripts\BaseBehaviour.h" />
     <ClInclude Include="Game\Scripts\GameLevel\GameLevel.h" />

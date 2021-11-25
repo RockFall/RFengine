@@ -23,10 +23,14 @@ void Enemy::Start()
 	timeSinceLastShot = 1.0f;
 
 	health = ceil(gameObject->transform.size.x / 50.0f);
-	if (gameObject->transform.size.x >= 400.0f) {
+	if (gameObject->transform.size.x >= (GameEditor::GAME_WIDTH - 100.0f)/3.0f - 20.0f) {
 		isBoss = true;
 		timeSinceLastShot = 1.0f;
 		health = 20;
+		if (gameObject->transform.size.x >= 400.0f) {
+			isFinalBoss = true;
+			health = 40;
+		}
 	}
 }
 
@@ -139,7 +143,10 @@ void Enemy::Shoot(float dt)
 	GameEditor::GameObjectSetSolid(bulletID, true);
 
 	// Play sound
-	GameContext::SoundQueue.push(std::make_pair("Enemy Shoot", 0.4f));
+	if (isBoss)
+		GameContext::SoundQueue.push(std::make_pair("Boss Shoot", 0.5f));
+	else
+		GameContext::SoundQueue.push(std::make_pair("Enemy Shoot", 0.4f));
 	
 }
 
@@ -154,5 +161,28 @@ void Enemy::Hit(int damage) {
 	if (health <= 0) {
 		GameContext::CurrentAttributes["GameLevel_0"]->gameLevelScript.EnemyDied(gameObject->GetFormattedName());
 		GameEditor::DestroyGameObject(gameObject->GetFormattedName());
+		if (isBoss) {
+			if (isFinalBoss) {
+				GameContext::SoundQueue.push(std::make_pair("Final Boss Death", 0.7f));
+				GameContext::win = true;
+				GameContext::gameOver = true;
+				GameEditor::CreateGameObject(
+					"WIN",
+					glm::vec2(50.0f, GameEditor::GAME_HEIGHT / 2.0f - 100.0f),
+					true,
+					glm::vec2(500.0f, 200.0f),
+					false,
+					"You Win"
+				);
+				GameContext::CurrentObjects["WIN_0"]->sprite.color.w = 0.0f;
+			}
+			else
+				GameContext::SoundQueue.push(std::make_pair("Boss Death", 0.7f));
+		}
+		else {
+			if (ceil(gameObject->transform.size.x / 50.0f > 1))
+				GameContext::SoundQueue.push(std::make_pair("Enemy Death", 0.2f));
+		}
+
 	}
 }

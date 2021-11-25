@@ -6,6 +6,7 @@
 #include "../../Game/Scripts/GameLevel/GameLevel.h"
 #include "../../Game/Scripts/Enemy/Enemy.h"
 #include "../../Game/Scripts/Background/Background.h"
+#include "../../Game/Scripts/AnimatedSprite/AnimatedSprite.h"
 
 class GameObject;
 
@@ -20,10 +21,12 @@ public:
 	Bullet bulletScript;
 	GameLevel gameLevelScript;
 	Background backgroundScript;
+	AnimatedSprite animationScript;
 
-	Attribute() : gameObject(nullptr), playerScript(nullptr) { }
+	Attribute() : gameObject(nullptr), playerScript(nullptr), enemyScript(nullptr),
+		bulletScript(nullptr), gameLevelScript(nullptr), backgroundScript(nullptr), animationScript(nullptr) { }
 
-	Attribute(const Attribute& a) : gameObject(a.gameObject), playerScript(a.playerScript) { }
+	//Attribute(const Attribute& a) : gameObject(a.gameObject), playerScript(a.playerScript) { }
 
 	Attribute(GameObject* go, std::string type);
 

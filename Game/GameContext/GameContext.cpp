@@ -5,3 +5,4 @@ std::map<std::string, std::unique_ptr<Attribute>> GameContext::CurrentAttributes
 std::queue<std::pair<std::string, float>> GameContext::SoundQueue;
 
 bool GameContext::gameOver = false;
+bool GameContext::win = false;

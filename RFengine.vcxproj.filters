@@ -96,6 +96,9 @@
     <ClCompile Include="Engine\TextRenderer\TextRenderer.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Scripts\AnimatedSprite\AnimatedSprite.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\sprite.vs">
@@ -180,6 +183,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Engine\TextRenderer\TextRenderer.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scripts\AnimatedSprite\AnimatedSprite.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

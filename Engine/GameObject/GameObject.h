@@ -10,8 +10,8 @@
 
 
 struct Sprite {
-	Texture2D texture;
-	glm::vec3 color;
+	std::shared_ptr<Texture2D> texture;
+	glm::vec4 color;
 };
 
 // An element of a scene. 
@@ -32,7 +32,7 @@ public:
 	// ----- Constructors -----
 	GameObject();
 	~GameObject();
-	GameObject(std::string name,int id, glm::vec2 pos, glm::vec2 size, Texture2D texture, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
+	GameObject(std::string name,int id, glm::vec2 pos, glm::vec2 size, std::shared_ptr<Texture2D> texture, glm::vec4 color = glm::vec4(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
 
 
 	// ---- GETTERS ----
@@ -43,6 +43,7 @@ public:
 
 	// ---- Setters ----
 	void SetTag(std::string tagName);
+	void setTexture(std::string texName);
 
 	// Unites name and id into name_id
 	static std::string FormattedName(std::string name, int id);

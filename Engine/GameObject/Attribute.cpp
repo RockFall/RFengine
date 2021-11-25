@@ -19,6 +19,9 @@ Attribute::Attribute(GameObject* go, std::string type) : gameObject(go)
 	else if (type == "Background") {
 		this->backgroundScript = Background(gameObject);
 	}
+	else if (type == "AnimatedSprite") {
+		this->animationScript = AnimatedSprite(gameObject);
+	}
 }
 
 Attribute::~Attribute()
@@ -48,6 +51,9 @@ void Attribute::Update(float dt, bool keys[], glm::vec2 mousePos)
 	}
 	else if (type == "Background") {
 		this->backgroundScript.Update(dt, keys, mousePos);
+	}
+	else if (type == "AnimatedSprite") {
+		this->animationScript.Update(dt, keys, mousePos);
 	}
 }
 

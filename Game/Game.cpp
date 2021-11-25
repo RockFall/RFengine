@@ -105,15 +105,33 @@ void Game::LoadAllTextures()
 	ResourceManager::LoadTexture("Resources/BackgroundHemacias.png", true, "BackgroundHemacias");
 	ResourceManager::LoadTexture("Resources/Fights01.png", true, "Fights01");
 	ResourceManager::LoadTexture("Resources/Fights02.png", true, "Fights02");
+
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim1.png", true, "PlayerAnim01");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim2.png", true, "PlayerAnim02");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim3.png", true, "PlayerAnim03");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim4.png", true, "PlayerAnim04");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim5.png", true, "PlayerAnim05");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim6.png", true, "PlayerAnim06");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim7.png", true, "PlayerAnim07");
+	ResourceManager::LoadTexture("Resources/Animations/Linfocito_B_anim8.png", true, "PlayerAnim08");
+
+	ResourceManager::LoadTexture("Resources/GameOver.png", true, "Game Over");
+	ResourceManager::LoadTexture("Resources/YouWin.png", true, "You Win");
 }
 
 void Game::LoadAllSounds() {
 	ResourceManager::LoadSound("Resources/Sounds/music.mp3", "Background Music");
+	ResourceManager::LoadSound("Resources/Sounds/gameover_music.mp3", "GameOver Music");
 	ResourceManager::LoadSound("Resources/Sounds/PlayerShoot.mp3", "Player Shoot");
 	ResourceManager::LoadSound("Resources/Sounds/EnemyShoot.mp3", "Enemy Shoot");
 	ResourceManager::LoadSound("Resources/Sounds/Hit01.mp3", "Hit little");
 	ResourceManager::LoadSound("Resources/Sounds/Hit02.mp3", "Hit big");
 	ResourceManager::LoadSound("Resources/Sounds/Dive.mp3", "Dive");
+	ResourceManager::LoadSound("Resources/Sounds/BossShoot.mp3", "Boss Shoot");
+	ResourceManager::LoadSound("Resources/Sounds/PlayerDeath.mp3", "Player Death");
+	ResourceManager::LoadSound("Resources/Sounds/EnemyDeath.mp3", "Enemy Death");
+	ResourceManager::LoadSound("Resources/Sounds/BossDeath.mp3", "Boss Death");
+	ResourceManager::LoadSound("Resources/Sounds/FinalBossDeath.mp3", "Final Boss Death");
 }
 
 // Called every frame first
@@ -234,7 +252,7 @@ void Game::Render()
 		}
 
 		Renderer->DrawSprite(
-			go.sprite.texture,
+			*(go.sprite.texture),
 			go.transform.position + glm::vec2(GameEditor::GAME_OFFSET, 0.0f),
 			go.transform.size,
 			go.transform.rotation,
@@ -244,8 +262,12 @@ void Game::Render()
 	
 
 	// Play all queued sounds
-	for (size_t i = 0; i < GameContext::SoundQueue.size(); i++)
+	while (!GameContext::SoundQueue.empty())
 	{
+		if (GameContext::SoundQueue.front().first == "Stop all") {
+			Sounds->StopAll();
+			GameContext::SoundQueue.pop();
+		}
 		std::string soundPath = ResourceManager::GetSoundPath(GameContext::SoundQueue.front().first);
 		Sounds->Play(soundPath, false, GameContext::SoundQueue.front().second);
 		GameContext::SoundQueue.pop();

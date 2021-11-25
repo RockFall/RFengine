@@ -29,7 +29,6 @@ public:
 	void Die(float dt);
 
 	glm::vec2 getSpeed();
-
 private:
 	// Player GameObject
 	GameObject* gameObject;

@@ -42,6 +42,7 @@ private:
 
 	// Life variables
 	bool isBoss;
+	bool isFinalBoss;
 	int health;
 
 	// Movement position

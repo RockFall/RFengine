@@ -67,6 +67,7 @@ void Bullet::DoCollisions(float dt)
 					GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
 				}
 				else if (targetIt.second->GetTag() == "Player") {
+
 					GameContext::CurrentAttributes[targetIt.second->GetFormattedName()]->playerScript.Hit(damage, dt);
 					GameEditor::DestroyGameObject(this->gameObject->GetFormattedName());
 				}
@@ -76,14 +77,14 @@ void Bullet::DoCollisions(float dt)
 	}
 }
 
-bool Bullet::CheckCollision(GameObject* one, GameObject* two)
+bool Bullet::CheckCollision(GameObject* one, GameObject* thisObj)
 {
 	// collision x-axis?
-	bool collisionX = one->transform.position.x + one->transform.size.x >= two->transform.position.x &&
-		two->transform.position.x + two->transform.size.x >= one->transform.position.x;
+	bool collisionX = one->transform.position.x + (one->transform.size.x) >= thisObj->transform.position.x &&
+		thisObj->transform.position.x + thisObj->transform.size.x >= one->transform.position.x;
 	// collision y-axis?
-	bool collisionY = one->transform.position.y + one->transform.size.y >= two->transform.position.y &&
-		two->transform.position.y + two->transform.size.y >= one->transform.position.y;
+	bool collisionY = one->transform.position.y + one->transform.size.y >= thisObj->transform.position.y &&
+		thisObj->transform.position.y + thisObj->transform.size.y >= one->transform.position.y;
 	// collision only if on both axes
 	return collisionX && collisionY;
 }

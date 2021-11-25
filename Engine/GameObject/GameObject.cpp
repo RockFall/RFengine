@@ -10,15 +10,15 @@ GameObject::GameObject()
 	this->transform.velocity = glm::vec2(0.0f, 0.0f);
 	this->transform.rotation = 0.0f;
 
-	this->sprite.color = glm::vec3(1.0f);
-	this->sprite.texture = Texture2D();
+	this->sprite.color = glm::vec4(1.0f);
+	this->sprite.texture = nullptr;
 }
 GameObject::~GameObject()
 {
 }
 
 
-GameObject::GameObject(std::string name, int id, glm::vec2 pos, glm::vec2 size, Texture2D texture, glm::vec3 color, glm::vec2 velocity)
+GameObject::GameObject(std::string name, int id, glm::vec2 pos, glm::vec2 size, std::shared_ptr<Texture2D> texture, glm::vec4 color, glm::vec2 velocity)
 	: isSolid(false), hasBeenDestroyed(false), tag() {
 	this->name = name;
 	this->id = id;
@@ -52,6 +52,11 @@ std::string GameObject::GetTag()
 void GameObject::SetTag(std::string tagName)
 {
 	this->tag = tagName;
+}
+
+void GameObject::setTexture(std::string texName)
+{
+	this->sprite.texture = ResourceManager::GetTexture(texName);
 }
 
 std::string GameObject::FormattedName(std::string name, int id)

@@ -18,6 +18,9 @@ public:
 	// Plays the audio of given file
 	void Play(std::string fileName, bool isLoop, float volume = 1);
 
+	// Stop all sounds
+	void StopAll();
+
 private:
 	ISoundEngine* SoundEngine;
 };

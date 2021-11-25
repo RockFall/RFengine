@@ -19,23 +19,23 @@ class ResourceManager
 {
 public:
     // Resource storage
-    static std::map<std::string, Shader>        Shaders;
-    static std::map<std::string, Texture2D>     Textures;
-    static std::map<std::string, std::string>   SoundPaths;
+    static std::map<std::string, Shader>                         Shaders;
+    static std::map<std::string, std::shared_ptr<Texture2D>>     Textures;
+    static std::map<std::string, std::string>                    SoundPaths;
 
     // From given vertex, fragment and optionally geometry shaders source codes, 
     // it loads all shaders, creating multiple Shader instances and returning them. 
     // -> 'geometryFile' can be nullptr and will not be loaded
-    static Shader LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name);
+    static void LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name);
 
     // Returns shader with given name from global map
     static Shader GetShader(std::string name);
 
     // Load and create a Texture from a given file
-    static Texture2D LoadTexture(const char* filePath, bool alpha, std::string name);
+    static void LoadTexture(const char* filePath, bool alpha, std::string name);
 
     // Returns texture with given name from global map
-    static Texture2D GetTexture(std::string name);
+    static std::shared_ptr<Texture2D> GetTexture(std::string name);
 
     static std::string LoadSound(std::string filePath, std::string soundName);
 

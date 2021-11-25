@@ -33,6 +33,7 @@ void GameEditor::LoadInitialScene()
 	GameContext::CurrentAttributes[ID]->backgroundScript.setSpeed(100.0f);
 	GameContext::CurrentObjects[ID]->SetTag("Background");
 
+
 	// ---- Creating Player ----
 
 	// Initial size of the player paddle
@@ -55,7 +56,7 @@ void GameEditor::LoadInitialScene()
 	// ------------------------------------------------------------
 }
 
-std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size, bool hasScript, std::string texName) {
+std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite, glm::vec2 size, bool hasScript, std::string texName, std::string scriptName) {
 	int count = 0;
 	// While _0 _1 _2 ... exists, keeps counting
 	// ultil findind an 'name_N' that doesn't exists
@@ -74,8 +75,12 @@ std::string GameEditor::CreateGameObject(std::string name, glm::vec2 pos, bool h
 
 	GameContext::CurrentObjects.emplace(formatedName, std::move(gameObject));
 
-	if (hasScript)
-		AttributeManager::AddGameObjectAttribute(formatedName, name);
+	if (hasScript) {
+		if (scriptName == "default")
+			AttributeManager::AddGameObjectAttribute(formatedName, name);
+		else
+			AttributeManager::AddGameObjectAttribute(formatedName, scriptName);
+	}
 
 	return formatedName;
 }
@@ -126,4 +131,17 @@ void GameEditor::PlayerDeathScene(float dt)
 		GameContext::CurrentAttributes["Background_5"]->backgroundScript.setSpeed(-100);
 	}
 	
+
+	if (GameContext::win) {
+		if (GameContext::CurrentObjects["WIN_0"]->sprite.color.w > 1.0f) {
+			GameContext::CurrentObjects["WIN_0"]->sprite.color.w = 1.0f;
+		}
+		GameContext::CurrentObjects["WIN_0"]->sprite.color.w += dt/2.0f;
+	}
+	else {
+		if (GameContext::CurrentObjects["LOST_0"]->sprite.color.w > 1.0f) {
+			GameContext::CurrentObjects["LOST_0"]->sprite.color.w = 1.0f;
+		}
+		GameContext::CurrentObjects["LOST_0"]->sprite.color.w += dt / 2.0f;
+	}
 }

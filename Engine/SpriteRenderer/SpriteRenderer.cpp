@@ -12,7 +12,7 @@ SpriteRenderer::~SpriteRenderer()
 	this->quadVAO.Delete();
 }
 
-void SpriteRenderer::DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color)
+void SpriteRenderer::DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec4 color)
 {
 	this->shader.Activate();
 
@@ -40,7 +40,7 @@ void SpriteRenderer::DrawSprite(Texture2D& texture, glm::vec2 position, glm::vec
 
 	// Inserting the model matrix into the shader
 	this->shader.SetMatrix4("model", model);
-	this->shader.SetVector3f("spriteColor", color);
+	this->shader.SetVector4f("spriteColor", color);
 
 	glActiveTexture(GL_TEXTURE0);
 	texture.Bind();

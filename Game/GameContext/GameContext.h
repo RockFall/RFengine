@@ -17,6 +17,7 @@ public:
 	static std::queue<std::pair<std::string, float>> SoundQueue;
 
 	static bool gameOver;
+	static bool win;
 
 private:
 	GameContext();

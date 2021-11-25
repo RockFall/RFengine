@@ -8,17 +8,16 @@
 
 
 // Instantiate static variables
-std::map<std::string, Texture2D>    ResourceManager::Textures;
-std::map<std::string, Shader>       ResourceManager::Shaders;
-std::map<std::string, std::string>  ResourceManager::SoundPaths;
+std::map<std::string, std::shared_ptr<Texture2D>>   ResourceManager::Textures;
+std::map<std::string, Shader>                       ResourceManager::Shaders;
+std::map<std::string, std::string>                  ResourceManager::SoundPaths;
 
 
-Shader ResourceManager::LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name)
+void ResourceManager::LoadShader(const char* vertexFile, const char* fragmentFile, const char* geometryFile, std::string name)
 {
     // Creates and add shader to global map
     //Shaders[name] = LoadShaderFromFile(vertexFile, fragmentFile, geometryFile);
     Shaders[name] = AlternativeLoadShaderFromFile(vertexFile, fragmentFile, geometryFile);
-    return Shaders[name];
 }
 
 Shader ResourceManager::GetShader(std::string name)
@@ -26,18 +25,17 @@ Shader ResourceManager::GetShader(std::string name)
     return Shaders[name];
 }
 
-Texture2D ResourceManager::LoadTexture(const char* file, bool alpha, std::string name)
+void ResourceManager::LoadTexture(const char* file, bool alpha, std::string name)
 {
-    Textures[name] = LoadTextureFromFile(file, alpha);
-    return Textures[name];
+    Textures[name] = std::make_shared<Texture2D>(LoadTextureFromFile(file, alpha));
 }
 
-Texture2D ResourceManager::GetTexture(std::string name)
+std::shared_ptr<Texture2D> ResourceManager::GetTexture(std::string name)
 {
     if (Textures.find(name) == Textures.end()) {
         std::cout << "RESOURCE MANAGER: Texture \""<< name << "\" not found on internal std::map.\n" <<
             "Have you added it to Game::LoadAllTextures ?\n-----------------------------------------" << std::endl;
-        return Texture2D();
+        return nullptr;
     }
 
     return Textures[name];
@@ -67,7 +65,7 @@ void ResourceManager::Clear()
         glDeleteProgram(iter.second.ID);
     // Delete all Textures
     for (auto iter : Textures)
-        glDeleteTextures(1, &iter.second.ID);
+        glDeleteTextures(1, &iter.second->ID);
 }
 
 Shader ResourceManager::LoadShaderFromFile(const char* vertexFile, const char* fragmentFile, const char* geometryFile)

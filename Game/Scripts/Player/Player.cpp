@@ -79,16 +79,42 @@ void Player::Die(float dt)
 	GameContext::CurrentObjects[gameObject->GetFormattedName()]->hasBeenDestroyed = true;
 	GameContext::gameOver = true;
 
-	/*
-	for (auto& go : GameContext::CurrentObjects) {
-		if (go.second->GetFormattedName() != "Background_0" && 
-			go.second->GetFormattedName() != "Background_1" &&
-			go.second->GetTag() == "Background") {
-			float speed = GameContext::CurrentAttributes[go.second->GetFormattedName()]->backgroundScript.getSpeed();
-			GameContext::CurrentAttributes[go.second->GetFormattedName()]->backgroundScript.setSpeed(30.0f);
-		}
-		
-	}*/
+	// Creates Player Animation GameObject
+	std::string animID = GameEditor::CreateGameObject(
+		"Death Animation",
+		gameObject->transform.position,
+		true,
+		this->gameObject->transform.size,
+		true,
+		"Player",
+		"AnimatedSprite"
+	);
+
+	// Adding all animation textures
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim01");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim02");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim03");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim04");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim05");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim06");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim07");
+	GameContext::CurrentAttributes[animID]->animationScript.AddTexture("PlayerAnim08");
+
+	// Play dead sound
+	GameContext::SoundQueue.push(std::make_pair("Stop all", 0.0f));
+	GameContext::SoundQueue.push(std::make_pair("Player Death", 0.5f));
+	GameContext::SoundQueue.push(std::make_pair("GameOver Music", 0.5f));
+
+	GameEditor::CreateGameObject(
+		"LOST",
+		glm::vec2(50.0f, (GameEditor::GAME_HEIGHT / 2.0f) - 100.0f),
+		true,
+		glm::vec2(500.0f, 200.0f),
+		false,
+		"Game Over"
+	);
+	GameContext::CurrentObjects["LOST_0"]->sprite.color.w = 0.0f;
+
 }
 
 glm::vec2 Player::getSpeed()

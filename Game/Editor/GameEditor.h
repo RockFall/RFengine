@@ -35,7 +35,7 @@ public:
 	// 'size': glm::vec2 of the size of the object, conventionally multiple of 10 (and a square)
 	// 'hasScript': Must be false if the GameObject is supposed to not have a script
 	// 'texName': Used for cases when the name of the Texture is different from the name
-	static std::string CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite = true, glm::vec2 size = glm::vec2(100.0f, 100.0f), bool hasScript = true, std::string texName = "default");
+	static std::string CreateGameObject(std::string name, glm::vec2 pos, bool hasSprite = true, glm::vec2 size = glm::vec2(100.0f, 100.0f), bool hasScript = true, std::string texName = "default", std::string scriptName = "default");
 
 	// From a given name (i.e. Enemy_0), marks the GameObject 
 	// of given name as to be destroyed at the end of Update()

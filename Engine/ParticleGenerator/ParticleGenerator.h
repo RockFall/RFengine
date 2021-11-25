@@ -17,7 +17,7 @@ class ParticleGenerator
 {
 public:
     // ----- Constructor -----
-    ParticleGenerator(Shader shader, Texture2D texture, unsigned int amount);
+    ParticleGenerator(Shader shader, std::shared_ptr<Texture2D> texture, unsigned int amount);
     // Called every frame
     void Update(float dt, GameObject& object, unsigned int newParticles, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
     // Called at the end of frame, on Rendering
@@ -29,7 +29,7 @@ private:
 
     // Render Data
     Shader shader;
-    Texture2D texture;
+    std::shared_ptr<Texture2D> texture;
     unsigned int VAO;
 
     // Initializze VBO and VAO

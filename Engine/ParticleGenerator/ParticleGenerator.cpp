@@ -1,6 +1,6 @@
 #include "ParticleGenerator.h"
 
-ParticleGenerator::ParticleGenerator(Shader shader, Texture2D texture, unsigned int amount)
+ParticleGenerator::ParticleGenerator(Shader shader, std::shared_ptr<Texture2D> texture, unsigned int amount)
     : shader(shader), texture(texture), amount(amount)
 {
     this->init();
@@ -39,7 +39,7 @@ void ParticleGenerator::Draw(glm::vec2 gameOffset)
         {
             this->shader.SetVector2f("offset", particle.Position + gameOffset);
             this->shader.SetVector4f("color", particle.Color);
-            this->texture.Bind();
+            this->texture->Bind();
             glBindVertexArray(this->VAO);
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glBindVertexArray(0);

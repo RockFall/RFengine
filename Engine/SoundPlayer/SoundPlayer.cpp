@@ -21,3 +21,8 @@ void SoundPlayer::Play(std::string fileName, bool isLoop, float volume)
 	else
 		std::cout << "SOUNDPLAYER:Play() -- *sound was nullptr" << std::endl;
 }
+
+void SoundPlayer::StopAll()
+{
+	SoundEngine->stopAllSounds();
+}
